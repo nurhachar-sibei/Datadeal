@@ -158,11 +158,9 @@ datetime
 Datadeal/
 ├── postgres_manager.py      # 核心数据库管理类
 ├── advanced_manager.py      # 高级功能扩展类
-├── demo_usage.py           # 完整使用演示
-├── simple_test.py          # 基础功能测试
-├── comprehensive_test.py   # 综合功能测试
-├── test_example.py         # 测试示例
 ├── README.md              # 项目文档
+├── easy_test.ipynb         # 简单的测试文件（复杂的在测试文件和案例文件-虽然可能没啥用）
+├── test_file/             # 各种测试文件目录
 ├── sample_data/           # 样本数据目录 (13个CSV文件)
 │   ├── Fundamental_PB_Ratio.csv      # 市净率数据
 │   ├── Fundamental_PE_Ratio.csv      # 市盈率数据
@@ -177,6 +175,7 @@ Datadeal/
 │   ├── Technical_MACD.csv            # MACD指标
 │   ├── Technical_MA_Ratio.csv        # 移动平均比率
 │   └── Technical_RSI.csv             # RSI指标
+├── examples/             # 各种案例文件目录
 └── datadeal.log           # 系统日志文件
 ```
 
