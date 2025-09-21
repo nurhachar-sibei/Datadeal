@@ -127,7 +127,7 @@ CREATE INDEX idx_table_name_datetime ON table_name (datetime);
 ```python
 # 标准查询输出
                 000001.SZ  000002.SZ  000858.SZ  002415.SZ
-datetime                                                
+datetime                                            
 2020-01-01      0.907444   2.533771   0.578473   2.115682
 2020-01-02      1.116457   4.664031   4.134741   3.608640
 2020-01-03      1.064950   0.674015   2.350563   4.018990
@@ -236,7 +236,7 @@ with PostgreSQLManager() as db:
   
     if success:
         print("表创建成功!")
-      
+  
         # 获取表信息
         info = db.get_table_info("stock_pb_ratio")
         print(f"表信息: {info}")
@@ -898,17 +898,12 @@ python -m pytest tests/
 - 更新相关文档
 - 遵循代码风格规范
 
-## 📄 许可证
-
-本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
-
 ## 📞 支持与联系
 
 如有问题或建议，请通过以下方式联系：
 
-- 📧 Email: support@datadeal.com
+- 📧 Email: cbw_18810739172@163.com
 - 🐛 Issues: [GitHub Issues](https://github.com/your-repo/issues)
-- 📖 Wiki: [项目Wiki](https://github.com/your-repo/wiki)
 
 ---
 
