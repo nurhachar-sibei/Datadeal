@@ -237,3 +237,542 @@
 2025-09-22 10:54:20 | INFO | 数据成功导入表 price_test_table, 共 1043 行, 耗时 0.24 秒
 2025-09-22 10:54:20 | INFO | 表 price_test_table 创建成功，导入了 1043 行数据
 2025-09-22 10:54:20 | INFO | [Function: create_table completed, elapsed time: 0.39s]
+2025-09-23 13:05:49 | INFO | 数据库连接成功
+2025-09-23 13:08:06 | INFO | [Function: create_table started...]
+2025-09-23 13:08:08 | INFO | 成功加载数据文件 D:/program_learning/光大实习/raw_data/hfq/close.csv, 形状: (2488, 5433)
+2025-09-23 13:08:08 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  表最多可以有 1600 个字段
+
+2025-09-23 13:08:09 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.TooManyColumns: 错误:  表最多可以有 1600 个字段
+
+
+2025-09-23 13:08:09 | INFO | [Function: create_table completed, elapsed time: 2.61s]
+2025-09-23 13:23:51 | INFO | [Function: create_table started...]
+2025-09-23 13:23:51 | INFO | 直接使用传入的DataFrame，形状: (9813612, 2)
+2025-09-23 13:23:52 | INFO | 根据DataFrame创建表结构: equity_fundamental_data.price_hfq_close
+2025-09-23 13:23:52 | INFO | 数据开始导入表 equity_fundamental_data.price_hfq_close
+2025-09-23 13:23:56 | INFO | 检测到跨度 3738 天的数据，将按月显示导入进度
+2025-09-23 13:23:56 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: could not convert string to float: '600000.SH'
+2025-09-23 13:23:56 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 191, in create_table
+    self._insert_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 388, in _insert_dataframe
+    row_data = [idx] + [None if pd.isna(val) else float(val) for val in row.values]
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 388, in <listcomp>
+    row_data = [idx] + [None if pd.isna(val) else float(val) for val in row.values]
+ValueError: could not convert string to float: '600000.SH'
+
+2025-09-23 13:23:57 | INFO | [Function: create_table completed, elapsed time: 5.53s]
+2025-09-23 13:25:00 | INFO | [Function: create_table started...]
+2025-09-23 13:25:00 | INFO | 直接使用传入的DataFrame，形状: (2488, 1600)
+2025-09-23 13:25:00 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  表最多可以有 1600 个字段
+
+2025-09-23 13:25:00 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.TooManyColumns: 错误:  表最多可以有 1600 个字段
+
+
+2025-09-23 13:25:00 | INFO | [Function: create_table completed, elapsed time: 0.03s]
+2025-09-23 13:25:13 | INFO | [Function: create_table started...]
+2025-09-23 13:25:13 | INFO | 直接使用传入的DataFrame，形状: (2488, 1500)
+2025-09-23 13:25:13 | INFO | 根据DataFrame创建表结构: equity_fundamental_data.price_hfq_close
+2025-09-23 13:25:13 | INFO | 数据开始导入表 equity_fundamental_data.price_hfq_close
+2025-09-23 13:25:13 | INFO | 检测到跨度 3738 天的数据，将按月显示导入进度
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-02-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-03-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-05-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-08-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-11-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2015-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-05-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-10-10 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2016-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-01-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-02-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-04-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:13 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-07-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2017-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-04-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-07-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-09-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2018-12-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-06-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-09-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2019-12-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-02-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-03-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-08-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-11-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2020-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-08-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2021-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-02-07 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:14 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-05-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-10-10 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2022-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-01-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-04-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-05-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-07-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2023-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-06-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-09-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2024-12-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2025-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2025-02-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2025-03-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:15 | INFO | 当前时间 2025-09-23 13:25:13, 导入时间点 2025-03-31 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:25:39 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  行太大: 尺寸 8168, 最大值 8160
+
+2025-09-23 13:25:39 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 191, in create_table
+    self._insert_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 466, in _insert_dataframe
+    psycopg2.extras.execute_batch(
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.ProgramLimitExceeded: 错误:  行太大: 尺寸 8168, 最大值 8160
+
+
+2025-09-23 13:25:39 | INFO | [Function: create_table completed, elapsed time: 26.55s]
+2025-09-23 13:26:36 | INFO | [Function: create_table started...]
+2025-09-23 13:26:36 | INFO | 直接使用传入的DataFrame，形状: (1000, 1500)
+2025-09-23 13:26:36 | INFO | 根据DataFrame创建表结构: equity_fundamental_data.price_hfq_close
+2025-09-23 13:26:36 | INFO | 数据开始导入表 equity_fundamental_data.price_hfq_close
+2025-09-23 13:26:36 | INFO | 检测到跨度 1499 天的数据，将按月显示导入进度
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-02-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-03-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-05-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-08-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-11-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2015-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-05-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-10-10 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2016-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-01-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-02-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:36 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-04-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-07-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2017-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-04-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-07-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-09-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2018-12-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2019-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2019-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:26:37 | INFO | 当前时间 2025-09-23 13:26:36, 导入时间点 2019-02-12 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:27:01 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  行太大: 尺寸 8168, 最大值 8160
+
+2025-09-23 13:27:01 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 191, in create_table
+    self._insert_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 466, in _insert_dataframe
+    psycopg2.extras.execute_batch(
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.ProgramLimitExceeded: 错误:  行太大: 尺寸 8168, 最大值 8160
+
+
+2025-09-23 13:27:01 | INFO | [Function: create_table completed, elapsed time: 25.07s]
+2025-09-23 13:29:04 | INFO | [Function: create_table started...]
+2025-09-23 13:29:04 | INFO | 直接使用传入的DataFrame，形状: (1000, 500)
+2025-09-23 13:29:04 | INFO | 根据DataFrame创建表结构: equity_fundamental_data.price_hfq_close
+2025-09-23 13:29:04 | INFO | 数据开始导入表 equity_fundamental_data.price_hfq_close
+2025-09-23 13:29:04 | INFO | 检测到跨度 1499 天的数据，将按月显示导入进度
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-02-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-03-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-05-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-08-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-11-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2015-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-05-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-10-10 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2016-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-01-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-02-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-04-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-07-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:04 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2017-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-04-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-07-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-09-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2018-12-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2019-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2019-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:05 | INFO | 当前时间 2025-09-23 13:29:04, 导入时间点 2019-02-12 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:29:16 | INFO | 数据成功导入表 equity_fundamental_data.price_hfq_close, 共 1000 行, 耗时 11.68 秒
+2025-09-23 13:29:16 | INFO | 表 equity_fundamental_data.price_hfq_close 创建成功，导入了 1000 行数据
+2025-09-23 13:29:16 | INFO | [Function: create_table completed, elapsed time: 11.71s]
+2025-09-23 13:30:15 | INFO | [Function: query_data started...]
+2025-09-23 13:30:15 | INFO | 执行查询: SELECT * FROM equity_fundamental_data.price_hfq_close WHERE datetime >= %s AND datetime <= %s ORDER BY datetime
+2025-09-23 13:30:15 | INFO | 查询完成，返回数据形状: (754, 500)
+2025-09-23 13:30:15 | INFO | [Function: query_data completed, elapsed time: 0.57s]
+2025-09-23 13:34:09 | INFO | [Function: create_table started...]
+2025-09-23 13:34:09 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:34:09 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  关系 "price_hfq_close" 已经存在
+
+2025-09-23 13:34:09 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.DuplicateTable: 错误:  关系 "price_hfq_close" 已经存在
+
+
+2025-09-23 13:34:09 | INFO | [Function: create_table completed, elapsed time: 0.02s]
+2025-09-23 13:35:28 | INFO | [Function: insert_data started...]
+2025-09-23 13:35:28 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:35:28 | ERROR | 表 equity_fundamental_data.price_hfq_close 不存在
+2025-09-23 13:35:28 | INFO | [Function: insert_data completed, elapsed time: 0.02s]
+2025-09-23 13:40:19 | INFO | [Function: insert_data started...]
+2025-09-23 13:40:19 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:40:20 | ERROR | 表 equity_fundamental_data.price_hfq_close 不存在
+2025-09-23 13:40:20 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-09-23 13:40:57 | INFO | [Function: create_table started...]
+2025-09-23 13:40:57 | ERROR | [Function: create_table failed after 0.00s, error: create_table() got an unexpected keyword argument 'update_existing']
+2025-09-23 13:41:08 | INFO | [Function: create_table started...]
+2025-09-23 13:41:08 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:41:08 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  关系 "price_hfq_close" 已经存在
+
+2025-09-23 13:41:08 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.DuplicateTable: 错误:  关系 "price_hfq_close" 已经存在
+
+
+2025-09-23 13:41:08 | INFO | [Function: create_table completed, elapsed time: 0.02s]
+2025-09-23 13:43:21 | INFO | 数据库连接成功
+2025-09-23 13:43:30 | INFO | [Function: create_table started...]
+2025-09-23 13:43:30 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:43:30 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  关系 "price_hfq_close" 已经存在
+
+2025-09-23 13:43:30 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.DuplicateTable: 错误:  关系 "price_hfq_close" 已经存在
+
+
+2025-09-23 13:43:30 | INFO | [Function: create_table completed, elapsed time: 0.02s]
+2025-09-23 13:43:33 | INFO | [Function: create_table started...]
+2025-09-23 13:43:33 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:43:33 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  关系 "price_hfq_close" 已经存在
+
+2025-09-23 13:43:33 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.DuplicateTable: 错误:  关系 "price_hfq_close" 已经存在
+
+
+2025-09-23 13:43:33 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-09-23 13:55:53 | INFO | [Function: create_table started...]
+2025-09-23 13:55:53 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:55:54 | INFO | 根据DataFrame创建表结构: equity_fundamental_data.price_hfq_close
+2025-09-23 13:55:54 | INFO | 数据开始导入表 equity_fundamental_data.price_hfq_close
+2025-09-23 13:55:54 | INFO | 检测到跨度 3738 天的数据，将按月显示导入进度
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-02-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-03-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-05-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-08-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-11-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2015-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-05-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-10-10 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2016-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-01-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-02-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-04-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-07-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2017-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-04-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-05-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-07-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-09-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2018-12-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-06-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-09-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2019-12-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-02-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-03-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-08-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-11-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2020-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-08-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2021-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-01-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-02-07 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-05-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-10-10 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2022-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-01-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-04-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-05-04 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-06-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-07-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-09-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-10-09 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2023-12-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-02-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-03-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-04-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-05-06 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-06-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-07-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-08-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-09-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-10-08 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-11-01 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:54 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2024-12-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:55 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2025-01-02 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:55 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2025-02-05 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:55 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2025-03-03 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:55:55 | INFO | 当前时间 2025-09-23 13:55:54, 导入时间点 2025-03-31 因子 equity_data.hfq_close 导入成功
+2025-09-23 13:56:21 | INFO | 数据成功导入表 equity_fundamental_data.price_hfq_close, 共 2488 行, 耗时 27.76 秒
+2025-09-23 13:56:21 | INFO | 表 equity_fundamental_data.price_hfq_close 创建成功，导入了 2488 行数据
+2025-09-23 13:56:21 | INFO | [Function: create_table completed, elapsed time: 27.81s]
+2025-09-23 13:57:12 | INFO | [Function: create_table started...]
+2025-09-23 13:57:12 | INFO | 直接使用传入的DataFrame，形状: (2488, 500)
+2025-09-23 13:57:12 | ERROR | 创建表 equity_fundamental_data.price_hfq_close 失败: 错误:  关系 "price_hfq_close" 已经存在
+
+2025-09-23 13:57:12 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 190, in create_table
+    self._create_table_from_dataframe(table_name, df)
+  File "d:\program_learning\factor_frame\Datadeal\postgres_manager.py", line 311, in _create_table_from_dataframe
+    self.cursor.execute(create_sql)
+  File "d:\ANACONDA\lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.DuplicateTable: 错误:  关系 "price_hfq_close" 已经存在
+
+
+2025-09-23 13:57:12 | INFO | [Function: create_table completed, elapsed time: 0.02s]

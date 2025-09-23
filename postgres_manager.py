@@ -120,7 +120,6 @@ class PostgreSQLManager:
             bool: 删除是否成功
         """
         self._ensure_connection()
-        
         try:
             # 检查表是否存在
             self.cursor.execute("""
@@ -128,7 +127,7 @@ class PostgreSQLManager:
                     SELECT FROM information_schema.tables 
                     WHERE table_name = %s
                 );
-            """, (table_name,))
+            """, (table_name.split('.')[-1],))
             
             if not self.cursor.fetchone()['exists']:
                 self.logger.warning(f"表 {table_name} 不存在")
@@ -171,7 +170,7 @@ class PostgreSQLManager:
                     SELECT FROM information_schema.tables 
                     WHERE table_name = %s
                 );
-            """, (table_name,))
+            """, (table_name.split('.')[-1],))
             
             table_exists = self.cursor.fetchone()['exists']
             
@@ -499,7 +498,7 @@ class PostgreSQLManager:
                     SELECT FROM information_schema.tables 
                     WHERE table_name = %s
                 );
-            """, (table_name,))
+            """, (table_name.split('.')[-1],))
             
             if not self.cursor.fetchone()['exists']:
                 self.logger.error(f"表 {table_name} 不存在")
@@ -511,10 +510,11 @@ class PostgreSQLManager:
                 FROM information_schema.columns 
                 WHERE table_name = %s
                 ORDER BY ordinal_position
-            """, (table_name,))
+            """, (table_name.split('.')[-1],))
             
             table_columns = {row['column_name']: row['data_type'] for row in self.cursor.fetchall()}
-            
+            print('table_columns')
+            print(table_columns)
             # 检查DataFrame列是否匹配表结构
             missing_cols = set(df.columns) - set(table_columns.keys())
             if missing_cols:
