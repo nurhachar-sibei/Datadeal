@@ -12,8 +12,11 @@ from advanced_manager import AdvancedPostgreSQLManager
 
 db = PostgreSQLManager()
 hfq_close = pd.read_csv("D:/program_learning/光大实习/raw_data/hfq/close.csv",index_col='date')
-c = hfq_close.iloc[:1000,:600]
 
-success = db.insert_data("equity_fundamental_data.price_hfq_close",
-                        c,update_existing=False)
+
+# success = db.insert_data("equity_fundamental_data.price_hfq_close",
+#                         c,update_existing=False)
+# a = db._load_data(c)
+c = db.query_data("price_hfq_close")
+print(c)
 # print(c.info())

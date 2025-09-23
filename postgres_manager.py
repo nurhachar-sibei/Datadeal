@@ -283,8 +283,9 @@ class PostgreSQLManager:
         
         # 排序索引
         df = df.sort_index()
-        
-        return df
+        df_l = df.stack().reset_index(level=1)
+        df_l.columns = ['code','value'] 
+        return df_l
     
     def _create_table_from_dataframe(self, table_name: str, df: pd.DataFrame):
         """
@@ -295,12 +296,14 @@ class PostgreSQLManager:
             df: DataFrame
         """
         # 创建表结构
-        columns_sql = ["datetime TIMESTAMP PRIMARY KEY"]
+        columns_sql = ["datetime TIMESTAMP"]
         
-        for col in df.columns:
+        # for col in df.columns:
             # 假设所有数据列都是数值型
-            columns_sql.append(f'"{col}" DOUBLE PRECISION')
-        
+        columns_sql.append("code VARCHAR(20)")
+        columns_sql.append("metric VARCHAR(100)")
+        columns_sql.append("value DOUBLE PRECISION")
+        columns_sql.append("PRIMARY KEY (datetime, code, metric)")
         create_sql = f"""
             CREATE TABLE {table_name} (
                 {', '.join(columns_sql)}
@@ -334,11 +337,11 @@ class PostgreSQLManager:
     
     def _insert_dataframe(self, table_name: str, df: pd.DataFrame):
         """
-        将DataFrame插入到表中
+        将DataFrame插入到表中（长表格格式：datetime, code, metric, value）
         
         Args:
             table_name: 表名
-            df: 要插入的DataFrame
+            df: 要插入的DataFrame（已经是长表格格式，包含code和value列）
         """
         from datetime import datetime
         import pandas as pd
@@ -346,6 +349,12 @@ class PostgreSQLManager:
         # 记录开始导入时间
         start_time = datetime.now()
         self.logger.info(f"数据开始导入表 {table_name}")
+        
+        # 获取metric名称（从表名中提取，去掉schema前缀）
+        if '.' in table_name:
+            metric_name = table_name.split('.')[-1]
+        else:
+            metric_name = table_name
         
         # 准备数据并按时间分组进行详细日志记录
         data_tuples = []
@@ -360,54 +369,42 @@ class PostgreSQLManager:
             else:
                 time_values = pd.to_datetime(time_index).to_pydatetime()
             
-            # 根据数据密度决定日志粒度
+            # 统一使用按日显示导入进度
             time_span = max(time_values) - min(time_values)
-            total_records = len(df)
-            
-            if time_span.days > 365:  # 超过一年的数据，按月记录
-                log_frequency = 'monthly'
-                self.logger.info(f"检测到跨度 {time_span.days} 天的数据，将按月显示导入进度")
-            elif time_span.days > 30:  # 超过一个月的数据，按周记录
-                log_frequency = 'weekly'
-                self.logger.info(f"检测到跨度 {time_span.days} 天的数据，将按周显示导入进度")
-            elif time_span.days > 1:  # 超过一天的数据，按天记录
-                log_frequency = 'daily'
-                self.logger.info(f"检测到跨度 {time_span.days} 天的数据，将按天显示导入进度")
-            else:  # 一天内的数据，按小时记录
-                log_frequency = 'hourly'
-                self.logger.info(f"检测到当日数据，将按小时显示导入进度")
+            log_frequency = 'daily'
+            self.logger.info(f"检测到跨度 {time_span.days} 天的数据，将按日显示导入进度")
         
         # 处理数据并分组记录
         processed_count = 0
         current_period = None
         period_count = 0
+        date_record_count = {}  # 记录每个日期的记录数
         
         for idx, row in df.iterrows():
-            # 将datetime索引和行数据组合
-            row_data = [idx] + [None if pd.isna(val) else float(val) for val in row.values]
-            data_tuples.append(tuple(row_data))
+            # 长表格格式：datetime, code, metric, value
+            code = row['code']
+            value = None if pd.isna(row['value']) else float(row['value'])
+            
+            # 构建数据元组：(datetime, code, metric, value)
+            row_data = (idx, code, metric_name, value)
+            data_tuples.append(row_data)
             processed_count += 1
             
-            # 确定当前时间点的周期
+            # 统计每个日期的记录数
+            date_key = idx.strftime('%Y-%m-%d') if hasattr(idx, 'strftime') else pd.to_datetime(idx).strftime('%Y-%m-%d')
+            if date_key not in date_record_count:
+                date_record_count[date_key] = 0
+            date_record_count[date_key] += 1
+            
+            # 确定当前时间点的周期（统一按日显示）
             if hasattr(idx, 'strftime'):
                 current_time = idx
             else:
                 current_time = pd.to_datetime(idx)
             
-            if log_frequency == 'monthly':
-                period_key = current_time.strftime('%Y-%m')
-                period_desc = current_time.strftime('%Y年%m月')
-            elif log_frequency == 'weekly':
-                # 计算周数
-                week_num = current_time.isocalendar()[1]
-                period_key = f"{current_time.year}-W{week_num:02d}"
-                period_desc = f"{current_time.year}年第{week_num}周"
-            elif log_frequency == 'daily':
-                period_key = current_time.strftime('%Y-%m-%d')
-                period_desc = current_time.strftime('%Y年%m月%d日')
-            else:  # hourly
-                period_key = current_time.strftime('%Y-%m-%d %H')
-                period_desc = current_time.strftime('%Y年%m月%d日 %H时')
+            # 统一使用按日记录
+            period_key = current_time.strftime('%Y-%m-%d')
+            period_desc = current_time.strftime('%Y年%m月%d日')
             
             # 如果进入新的时间周期，记录上一周期的完成情况
             if current_period is None:
@@ -415,49 +412,41 @@ class PostgreSQLManager:
                 period_count = 1
             elif current_period != period_key:
                 # 记录上一周期完成
-                prev_desc = period_desc if log_frequency == 'monthly' else (
-                    current_time.strftime('%Y年%m月') if log_frequency == 'weekly' else (
-                        current_time.strftime('%Y年%m月%d日') if log_frequency == 'daily' else
-                        current_time.strftime('%Y年%m月%d日 %H时')
-                    )
-                )
+                # 获取因子名称
+                factor_name = metric_name.replace('fundamental_', '').replace('price_', '').replace('technical_', '')
                 
-                # 获取因子名称（表名去掉前缀）
-                factor_name = table_name.replace('fundamental_', '').replace('price_', '').replace('technical_', '')
+                # 计算上一个日期的记录数（N*4格式中的N）
+                # prev_date = (current_time - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+                prev_records = date_record_count.get(prev_date, 0)
                 
                 self.logger.info(f"当前时间 {start_time.strftime('%Y-%m-%d %H:%M:%S')}, "
-                               f"导入时间点 {current_time.strftime('%Y-%m-%d')} "
-                               f"因子 {factor_name} 导入成功")
+                               f"导入时间点 {prev_date} "
+                               f"因子 {factor_name} 导入成功，共 {prev_records} 条记录")
                 
                 current_period = period_key
                 period_count = 1
             else:
                 period_count += 1
-        
+            prev_date = current_time.strftime('%Y-%m-%d')
         # 记录最后一个周期
         if current_period and processed_count > 0:
-            factor_name = table_name.replace('fundamental_', '').replace('price_', '').replace('technical_', '')
+            factor_name = metric_name.replace('fundamental_', '').replace('price_', '').replace('technical_', '')
             last_time = df.index[-1] if not df.empty else start_time
             if hasattr(last_time, 'strftime'):
                 last_time_str = last_time.strftime('%Y-%m-%d')
             else:
                 last_time_str = pd.to_datetime(last_time).strftime('%Y-%m-%d')
             
+            last_records = date_record_count.get(last_time_str, 0)
             self.logger.info(f"当前时间 {start_time.strftime('%Y-%m-%d %H:%M:%S')}, "
                            f"导入时间点 {last_time_str} "
-                           f"因子 {factor_name} 导入成功")
-        
-        # 构建列名列表
-        columns = ['datetime'] + [f'"{col}"' for col in df.columns]
+                           f"因子 {factor_name} 导入成功，共 {last_records} 条记录")
         
         # 构建INSERT语句 - 使用ON CONFLICT处理重复键
-        placeholders = ', '.join(['%s'] * len(columns))
-        update_cols = ', '.join([f'"{col}" = EXCLUDED."{col}"' for col in df.columns])
-        
         insert_sql = f"""
-            INSERT INTO {table_name} ({', '.join(columns)}) 
-            VALUES ({placeholders})
-            ON CONFLICT (datetime) DO UPDATE SET {update_cols}
+            INSERT INTO {table_name} (datetime, code, metric, value) 
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (datetime, code, metric) DO UPDATE SET value = EXCLUDED.value
         """
         
         # 批量插入数据
@@ -547,19 +536,19 @@ class PostgreSQLManager:
                    limit: Optional[int] = None,
                    return_format: str = 'pandas') -> Union[pd.DataFrame, np.ndarray, None]:
         """
-        查询数据
+        查询数据（从长表格格式转换为宽表格格式返回）
         
         Args:
             table_name: 表名
             start_date: 开始日期
             end_date: 结束日期
             codes: 代码列表
-            columns: 列名列表
+            columns: 列名列表（在长表格中不适用，保留为兼容性）
             limit: 限制返回行数
             return_format: 返回格式 ('pandas', 'numpy')
             
         Returns:
-            查询结果
+            查询结果（宽表格格式：datetime为索引，code为列）
         """
         self._ensure_connection()
         
@@ -576,19 +565,19 @@ class PostgreSQLManager:
                 conditions.append("datetime <= %s")
                 params.append(end_date)
             
-            # 构建SELECT子句
-            if columns:
-                select_cols = ['datetime'] + [f'"{col}"' for col in columns if col != 'datetime']
-            else:
-                select_cols = ['*']
+            if codes:
+                # 在长表格中，codes是通过code字段过滤的
+                placeholders = ', '.join(['%s'] * len(codes))
+                conditions.append(f"code IN ({placeholders})")
+                params.extend(codes)
             
-            # 构建查询SQL
-            query = f"SELECT {', '.join(select_cols)} FROM {table_name}"
+            # 构建查询SQL - 从长表格中查询
+            query = f"SELECT datetime, code, value FROM {table_name}"
             
             if conditions:
                 query += " WHERE " + " AND ".join(conditions)
             
-            query += " ORDER BY datetime"
+            query += " ORDER BY datetime, code"
             
             # 添加LIMIT子句
             if limit:
@@ -606,23 +595,33 @@ class PostgreSQLManager:
             
             # 转换为DataFrame
             df = pd.DataFrame(results)
-            df.set_index('datetime', inplace=True)
-            df.index = pd.to_datetime(df.index)
             
-            # 如果指定了codes，进行过滤（适用于宽表格式）
-            if codes and len(df.columns) > 1:
-                available_codes = [col for col in codes if col in df.columns]
+            # 将长表格转换为宽表格格式
+            # 使用pivot将code作为列，datetime作为索引，value作为值
+            df_wide = df.pivot(index='datetime', columns='code', values='value')
+            
+            # 确保索引是datetime类型
+            df_wide.index = pd.to_datetime(df_wide.index)
+            
+            # 排序索引和列
+            df_wide = df_wide.sort_index()
+            df_wide = df_wide.reindex(sorted(df_wide.columns), axis=1)
+            
+            # 如果指定了codes，确保只返回这些列
+            if codes:
+                available_codes = [col for col in codes if col in df_wide.columns]
                 if available_codes:
-                    df = df[available_codes]
+                    df_wide = df_wide[available_codes]
                 else:
                     self.logger.warning(f"指定的代码 {codes} 在表中不存在")
+                    return None
             
-            self.logger.info(f"查询完成，返回数据形状: {df.shape}")
+            self.logger.info(f"查询完成，返回数据形状: {df_wide.shape}")
             
             if return_format == 'numpy':
-                return df.values
+                return df_wide.values
             else:
-                return df
+                return df_wide
                 
         except Exception as e:
             self.logger.error(f"查询数据失败: {str(e)}")
@@ -635,7 +634,7 @@ class PostgreSQLManager:
                               codes: Optional[List[str]] = None,
                               return_format: str = 'pandas') -> Union[pd.DataFrame, None]:
         """
-        多因子查询功能，将多个因子表合并为长格式数据
+        多因子查询功能，将多个因子表合并为长格式数据（适配新的长表格格式）
         
         Args:
             table_names: 因子表名列表
@@ -666,9 +665,14 @@ class PostgreSQLManager:
                 time_conditions.append("datetime <= %s")
                 time_params.append(end_date)
             
-            time_where = ""
-            if time_conditions:
-                time_where = " WHERE " + " AND ".join(time_conditions)
+            # 构建代码条件
+            code_conditions = []
+            code_params = []
+            
+            if codes:
+                placeholders = ', '.join(['%s'] * len(codes))
+                code_conditions.append(f"code IN ({placeholders})")
+                code_params.extend(codes)
             
             # 为每个表构建UNION查询
             union_queries = []
@@ -683,52 +687,37 @@ class PostgreSQLManager:
                         SELECT FROM information_schema.tables 
                         WHERE table_name = %s
                     );
-                """, (table_name,))
+                """, (table_name.split(".")[-1],))
                 
                 if not self.cursor.fetchone()['exists']:
                     self.logger.warning(f"表 {table_name} 不存在，跳过")
                     continue
                 
-                # 获取表的列信息（排除datetime列）
-                self.cursor.execute("""
-                    SELECT column_name 
-                    FROM information_schema.columns 
-                    WHERE table_name = %s AND column_name != 'datetime'
-                    ORDER BY ordinal_position
-                """, (table_name,))
+                # 构建查询条件
+                conditions = time_conditions + code_conditions
+                params = time_params + code_params
                 
-                columns = [row['column_name'] for row in self.cursor.fetchall()]
+                where_clause = ""
+                if conditions:
+                    where_clause = " WHERE " + " AND ".join(conditions)
                 
-                if not columns:
-                    self.logger.warning(f"表 {table_name} 没有数据列，跳过")
-                    continue
+                # 从长表格中查询数据，metric字段作为因子名
+                query = f"""
+                    SELECT 
+                        datetime as date,
+                        code,
+                        metric as factors,
+                        value as values
+                    FROM {table_name}
+                    {where_clause}
+                    AND value IS NOT NULL
+                """
                 
-                # 如果指定了codes，只选择匹配的列
-                if codes:
-                    available_codes = [col for col in columns if col in codes]
-                    if not available_codes:
-                        self.logger.warning(f"表 {table_name} 中没有找到指定的股票代码，跳过")
-                        continue
-                    columns = available_codes
-                
-                # 为每个股票代码列创建一个SELECT语句
-                for code in columns:
-                    # 使用UNPIVOT的替代方案：为每个列创建单独的查询
-                    query = f"""
-                        SELECT 
-                            datetime as date,
-                            '{code}' as code,
-                            '{table_name}' as factors,
-                            "{code}" as values
-                        FROM {table_name}
-                        {time_where}
-                        AND "{code}" IS NOT NULL
-                    """
-                    union_queries.append(query)
-                    all_params.extend(time_params)
+                union_queries.append(query)
+                all_params.extend(params)
             
             if not union_queries:
-                self.logger.error("没有有效的表或列可以查询")
+                self.logger.error("没有有效的表可以查询")
                 return None
             
             # 合并所有查询
@@ -885,7 +874,7 @@ class PostgreSQLManager:
             self.logger.error(f"合并表失败: {str(e)}")
             return None
     
-    def list_tables(self) -> List[str]:
+    def list_tables(self, schema: str = 'public') -> List[str]:
         """
         列出所有表
         
@@ -898,9 +887,9 @@ class PostgreSQLManager:
             self.cursor.execute("""
                 SELECT table_name 
                 FROM information_schema.tables 
-                WHERE table_schema = 'public'
+                WHERE table_schema = %s
                 ORDER BY table_name
-            """)
+            """, (schema,))
             
             tables = [row['table_name'] for row in self.cursor.fetchall()]
             return tables
@@ -928,7 +917,7 @@ class PostgreSQLManager:
                 FROM information_schema.columns 
                 WHERE table_name = %s
                 ORDER BY ordinal_position
-            """, (table_name,))
+            """, (table_name.split(".")[-1],))
             
             columns = self.cursor.fetchall()
             

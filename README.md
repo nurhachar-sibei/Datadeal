@@ -855,6 +855,20 @@ with PostgreSQLManager() as db:
 
 ## 📚 版本历史
 
+### v3.0.0 (2025-01-21) - 长表格格式重构
+
+- 🔄 **重大更新**: 数据存储格式从宽表格（datetime*code）改为长表格（datetime, code, metric, value）
+- 🎯 **解决问题**: 突破PostgreSQL 1600字段限制，支持全A股5000只股票数据
+- ✅ **核心修改**:
+  - 修改 `_load_data` 函数：将宽表格数据转换为长表格格式
+  - 修改 `_create_table_from_dataframe` 函数：创建标准化的长表格结构（datetime, code, metric, value）
+  - 修改 `_insert_dataframe` 函数：适配长表格数据插入，保持日期日志显示
+  - 修改 `query_data` 函数：从长表格读取数据后转换为宽表格格式返回
+  - 保持 `query_data_multifactor` 函数原有功能，适配长表格查询
+  - 修改 `advanced_manager.py` 中相关函数以支持新的长表格格式
+- 🚀 **性能提升**: 支持更大规模的股票数据存储和查询
+- 📊 **兼容性**: 查询接口保持不变，用户无需修改现有代码
+
 ### v2.0.0 (2025-01-21)
 
 - ✅ **新增功能**: 支持pandas DataFrame和字典数据源

@@ -276,49 +276,67 @@ class AdvancedPostgreSQLManager(PostgreSQLManager):
             return False
     
     def _insert_dataframe_ignore_conflicts(self, table_name: str, df: pd.DataFrame):
-        """插入数据，忽略冲突"""
-        data_tuples = []
-        for idx, row in df.iterrows():
-            row_data = [idx] + [None if pd.isna(val) else float(val) for val in row.values]
-            data_tuples.append(tuple(row_data))
-        
-        columns = ['datetime'] + [f'"{col}"' for col in df.columns]
-        placeholders = ', '.join(['%s'] * len(columns))
-        
-        insert_sql = f"""
-            INSERT INTO {table_name} ({', '.join(columns)}) 
-            VALUES ({placeholders})
-            ON CONFLICT (datetime) DO NOTHING
         """
+        插入数据，忽略冲突
+        适配长表格格式：datetime, code, metric, value
+        """
+        # 获取metric名称（从表名中提取，去掉schema前缀）
+        metric_name = table_name.split('.')[-1]
+        
+        data_tuples = []
+        for datetime_idx, row in df.iterrows():
+            for code in row.index:
+                value = row[code]
+                if not pd.isna(value):
+                    data_tuples.append((datetime_idx, code, metric_name, float(value)))
+        
+        if not data_tuples:
+            self.logger.warning(f"没有有效数据插入到表 {table_name}")
+            return
+        
+        insert_sql = """
+            INSERT INTO {} (datetime, code, metric, value) 
+            VALUES %s
+            ON CONFLICT (datetime, code, metric) DO NOTHING
+        """.format(table_name)
         
         import psycopg2.extras
         psycopg2.extras.execute_values(
             self.cursor, insert_sql, data_tuples, page_size=1000
         )
         
-        self.logger.info(f"插入数据到表 {table_name}，忽略冲突")
+        self.logger.info(f"插入数据到表 {table_name}，忽略冲突，共 {len(data_tuples)} 条记录")
     
     def _insert_dataframe_error_on_conflict(self, table_name: str, df: pd.DataFrame):
-        """插入数据，遇到冲突时报错"""
-        data_tuples = []
-        for idx, row in df.iterrows():
-            row_data = [idx] + [None if pd.isna(val) else float(val) for val in row.values]
-            data_tuples.append(tuple(row_data))
-        
-        columns = ['datetime'] + [f'"{col}"' for col in df.columns]
-        placeholders = ', '.join(['%s'] * len(columns))
-        
-        insert_sql = f"""
-            INSERT INTO {table_name} ({', '.join(columns)}) 
-            VALUES ({placeholders})
         """
+        插入数据，遇到冲突时报错
+        适配长表格格式：datetime, code, metric, value
+        """
+        # 获取metric名称（从表名中提取，去掉schema前缀）
+        metric_name = table_name.split('.')[-1]
+        
+        data_tuples = []
+        for datetime_idx, row in df.iterrows():
+            for code in row.index:
+                value = row[code]
+                if not pd.isna(value):
+                    data_tuples.append((datetime_idx, code, metric_name, float(value)))
+        
+        if not data_tuples:
+            self.logger.warning(f"没有有效数据插入到表 {table_name}")
+            return
+        
+        insert_sql = """
+            INSERT INTO {} (datetime, code, metric, value) 
+            VALUES %s
+        """.format(table_name)
         
         import psycopg2.extras
         psycopg2.extras.execute_values(
             self.cursor, insert_sql, data_tuples, page_size=1000
         )
         
-        self.logger.info(f"插入数据到表 {table_name}，遇到冲突将报错")
+        self.logger.info(f"插入数据到表 {table_name}，遇到冲突将报错，共 {len(data_tuples)} 条记录")
     
     @function_timer
     def validate_data_quality(self, table_name: str, 
