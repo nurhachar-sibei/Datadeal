@@ -438,7 +438,7 @@ class PostgreSQLManager:
                 last_time_str = pd.to_datetime(last_time).strftime('%Y-%m-%d')
             
             last_records = date_record_count.get(last_time_str, 0)
-            self.logger.info(f"当前时间 {start_time.strftime('%Y-%m-%d %H:%M:%S')}, "
+            self.logger.info(f"录入因子-相关信息:"
                            f"导入时间点 {last_time_str} "
                            f"因子 {factor_name} 导入成功，共 {last_records} 条记录")
         
