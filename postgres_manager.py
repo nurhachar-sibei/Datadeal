@@ -419,7 +419,7 @@ class PostgreSQLManager:
                 # prev_date = (current_time - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
                 prev_records = date_record_count.get(prev_date, 0)
                 
-                self.logger.info(f"当前时间 {start_time.strftime('%Y-%m-%d %H:%M:%S')}, "
+                self.logger.info(f"录入因子-相关时间:"
                                f"导入时间点 {prev_date} "
                                f"因子 {factor_name} 导入成功，共 {prev_records} 条记录")
                 
