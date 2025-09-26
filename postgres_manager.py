@@ -526,7 +526,44 @@ class PostgreSQLManager:
             self.logger.error(f"插入数据到表 {table_name} 失败: {str(e)}")
             self.logger.error(f"详细错误信息: {traceback.format_exc()}")
             return False
+    @function_timer
+    def insert_data_diytable(self, table_name: str, data_source: Union[str, pd.DataFrame, dict], 
+                    update_existing: bool = True) -> bool:
+        """
+        向自定义表中插入新数据
+        
+        Args:
+            table_name: 表名
+            data_source: 数据源
+            update_existing: 是否更新已存在的数据
+            
+        Returns:
+            bool: 插入是否成功
+        """
+        self._ensure_connection()
+
+        try:
+            df = self._load_data(data_source)
+            if df is None:
+                return False
+            from io import StringIO
+            buffer = StringIO()
+            df.to_csv(buffer,index=False,header=False,sep='\t')
+            buffer.seek(0) #重置指针
+        
+            self.cursor.copy_from(buffer, table_name, sep='\t')
+            self.conn.commit()
+            self.logger.info(f"成功向自定义表 {table_name} 插入数据")
     
+
+
+        except Exception as e:
+            self.conn.rollback()
+            import traceback
+            self.logger.error(f"插入数据到自定义表 {table_name} 失败: {str(e)}")
+            self.logger.error(f"详细错误信息: {traceback.format_exc()}")
+            return False
+
     @function_timer
     def query_data(self, table_name: str, 
                    start_date: Optional[str] = None,
