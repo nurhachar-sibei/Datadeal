@@ -12749,3 +12749,64 @@ UnboundLocalError: local variable 'prev_date' referenced before assignment
 2025-09-23 17:02:20 | INFO | 数据成功导入表 price_hfq_close, 共 9800 行, 耗时 1.34 秒
 2025-09-23 17:02:20 | INFO | 成功向表 price_hfq_close 插入数据
 2025-09-23 17:02:20 | INFO | [Function: insert_data completed, elapsed time: 1.36s]
+2025-11-12 09:30:04 | INFO | 数据库连接成功: test_data_base
+2025-11-12 09:30:04 | INFO | [Function: create_table started...]
+2025-11-12 09:30:04 | INFO | 表 sample_pb_ratio 创建成功，包含 16 列
+2025-11-12 09:30:04 | INFO | 成功插入 1043 行数据到表 sample_pb_ratio
+2025-11-12 09:30:04 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-12 09:30:04 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | [Function: create_table started...]
+2025-11-12 09:30:04 | INFO | 表 sample_price_close 创建成功，包含 16 列
+2025-11-12 09:30:04 | INFO | 成功插入 1043 行数据到表 sample_price_close
+2025-11-12 09:30:04 | INFO | [Function: create_table completed, elapsed time: 0.06s]
+2025-11-12 09:30:04 | INFO | 表 sample_price_close 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | [Function: create_table started...]
+2025-11-12 09:30:04 | INFO | 表 sample_technical_rsi 创建成功，包含 16 列
+2025-11-12 09:30:04 | INFO | 成功插入 1043 行数据到表 sample_technical_rsi
+2025-11-12 09:30:04 | INFO | [Function: create_table completed, elapsed time: 0.06s]
+2025-11-12 09:30:04 | INFO | 表 sample_technical_rsi 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | 找到 3 个表
+2025-11-12 09:30:04 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | 表 sample_price_close 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | 表 sample_technical_rsi 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | [Function: load_table started...]
+2025-11-12 09:30:04 | INFO | 成功从表 sample_pb_ratio 加载数据，形状: (10, 16)
+2025-11-12 09:30:04 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-12 09:30:04 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | [Function: insert_data started...]
+2025-11-12 09:30:04 | INFO | [Function: load_table started...]
+2025-11-12 09:30:04 | INFO | 成功从表 sample_pb_ratio 加载数据，形状: (1043, 16)
+2025-11-12 09:30:04 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-12 09:30:04 | INFO | 发现 1093 行新数据（去重后）
+2025-11-12 09:30:04 | ERROR | 插入数据到表 sample_pb_ratio 失败: 错误:  字段 "000001_SZ" 被指定多次
+LINE 2: ...02142_SZ", "300059_SZ", "300750_SZ", "688981_SH", "000001_SZ...
+                                                             ^
+
+2025-11-12 09:30:04 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 324, in insert_data
+    self._insert_dataframe(table_name, df)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 256, in _insert_dataframe
+    psycopg2.extras.execute_batch(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.cursor, insert_sql, data_tuples, page_size=1000
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\anaconda\Lib\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.DuplicateColumn: 错误:  字段 "000001_SZ" 被指定多次
+LINE 2: ...02142_SZ", "300059_SZ", "300750_SZ", "688981_SH", "000001_SZ...
+                                                             ^
+
+
+2025-11-12 09:30:04 | INFO | [Function: insert_data completed, elapsed time: 0.08s]
+2025-11-12 09:30:04 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行
+2025-11-12 09:30:04 | INFO | [Function: load_table started...]
+2025-11-12 09:30:04 | INFO | 成功从表 sample_price_close 加载数据，形状: (1043, 16)
+2025-11-12 09:30:04 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-12 09:30:33 | INFO | 数据库连接已关闭
