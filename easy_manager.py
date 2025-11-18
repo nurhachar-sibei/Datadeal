@@ -260,21 +260,161 @@ class EasyManager:
         
         self.logger.info(f"成功插入 {len(data_tuples)} 行数据到表 {table_name}")
     
+    def _get_table_columns(self, table_name: str) -> List[str]:
+        """
+        获取表的列名列表
+        
+        Args:
+            table_name: 表名
+            
+        Returns:
+            列名列表
+        """
+        self.cursor.execute("""
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = %s
+            ORDER BY ordinal_position
+        """, (table_name.split('.')[-1],))
+        
+        return [row['column_name'] for row in self.cursor.fetchall()]
+    
+    @function_timer
+    def add_columns(self, table_name: str, dataframe: pd.DataFrame, 
+                    merge_on_index: bool = True) -> bool:
+        """
+        在表中增加新列，按索引合并数据
+        
+        Args:
+            table_name: 表名
+            dataframe: 包含新列的 DataFrame
+            merge_on_index: 是否基于索引合并（默认True）
+            
+        Returns:
+            bool: 添加是否成功
+        """
+        self._ensure_connection()
+        
+        try:
+            # 检查表是否存在
+            self.cursor.execute("""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_name = %s
+                );
+            """, (table_name.split('.')[-1],))
+            
+            if not self.cursor.fetchone()['exists']:
+                self.logger.error(f"表 {table_name} 不存在")
+                return False
+            
+            # 获取现有列
+            existing_columns = self._get_table_columns(table_name)
+            self.logger.info(f"表 {table_name} 现有列: {existing_columns}")
+            
+            # 处理DataFrame
+            df = dataframe.copy()
+            
+            # 处理索引
+            index_name = None
+            if df.index.name and not isinstance(df.index, pd.RangeIndex):
+                index_name = df.index.name
+                df = df.reset_index()
+            elif not isinstance(df.index, pd.RangeIndex):
+                index_name = 'index'
+                df.index.name = index_name
+                df = df.reset_index()
+            
+            # 清理列名
+            df.columns = [col.replace('.', '_').replace('-', '_').replace(' ', '_') 
+                         for col in df.columns]
+            if index_name:
+                index_name = index_name.replace('.', '_').replace('-', '_').replace(' ', '_')
+            
+            # 识别新列（排除已存在的列）
+            new_columns = [col for col in df.columns if col not in existing_columns]
+            
+            if not new_columns:
+                self.logger.warning(f"没有新列需要添加到表 {table_name}")
+                return True
+            
+            self.logger.info(f"识别到 {len(new_columns)} 个新列: {new_columns}")
+            
+            # 添加新列到表结构
+            for col in new_columns:
+                col_type = self._infer_column_type(df[col])
+                alter_sql = f'ALTER TABLE {table_name} ADD COLUMN "{col}" {col_type}'
+                self.cursor.execute(alter_sql)
+                self.logger.info(f"添加列 {col} (类型: {col_type})")
+            
+            self.conn.commit()
+            
+            # 按索引合并数据
+            if merge_on_index and index_name:
+                # 加载现有数据
+                existing_df = self.load_table(table_name)
+                
+                if existing_df is not None and not existing_df.empty:
+                    self.logger.info(f"按索引列 '{index_name}' 合并数据")
+                    
+                    # 只保留新列和索引列
+                    df_new_cols = df[[index_name] + new_columns]
+                    
+                    # 更新每一行的新列数据
+                    update_count = 0
+                    for _, row in df_new_cols.iterrows():
+                        index_value = row[index_name]
+                        
+                        # 构建UPDATE语句
+                        set_clause = ', '.join([f'"{col}" = %s' for col in new_columns])
+                        update_sql = f"""
+                            UPDATE {table_name}
+                            SET {set_clause}
+                            WHERE "{index_name}" = %s
+                        """
+                        
+                        # 准备参数
+                        values = [None if pd.isna(row[col]) else row[col] for col in new_columns]
+                        values.append(index_value)
+                        
+                        self.cursor.execute(update_sql, values)
+                        if self.cursor.rowcount > 0:
+                            update_count += 1
+                    
+                    self.conn.commit()
+                    self.logger.info(f"成功更新 {update_count} 行的新列数据")
+            
+            return True
+            
+        except Exception as e:
+            self.conn.rollback()
+            import traceback
+            self.logger.error(f"添加列到表 {table_name} 失败: {str(e)}")
+            self.logger.error(f"详细错误信息: {traceback.format_exc()}")
+            return False
+    
     @function_timer
     def insert_data(self, table_name: str, dataframe: pd.DataFrame, 
-                    deduplicate: bool = True) -> bool:
+                    mode: str = 'skip') -> bool:
         """
-        向表中插入数据，如果表存在则只插入不重复的行
+        向表中插入数据，支持多种重复数据处理模式
         
         Args:
             table_name: 表名
             dataframe: pandas DataFrame
-            deduplicate: 是否去重（默认True）
+            mode: 重复数据处理模式
+                - 'skip': 忽略重复数据，只插入新数据（默认）
+                - 'update': 覆盖重复数据，基于索引更新
+                - 'append': 直接追加，不检查重复
             
         Returns:
             bool: 插入是否成功
         """
         self._ensure_connection()
+        
+        if mode not in ['skip', 'update', 'append']:
+            self.logger.error(f"不支持的模式: {mode}，请使用 'skip', 'update' 或 'append'")
+            return False
         
         try:
             # 检查表是否存在
@@ -292,36 +432,127 @@ class EasyManager:
             df = dataframe.copy()
             
             # 处理索引
+            index_name = None
             if df.index.name and not isinstance(df.index, pd.RangeIndex):
+                index_name = df.index.name
                 df = df.reset_index()
             elif not isinstance(df.index, pd.RangeIndex):
-                df.index.name = 'index'
+                index_name = 'index'
+                df.index.name = index_name
                 df = df.reset_index()
-            
-            if deduplicate:
-                # 读取现有数据
-                existing_df = self.load_table(table_name)
-                
-                if existing_df is not None and not existing_df.empty:
-                    # 找出不重复的行
-                    # 合并两个DataFrame并标记重复
-                    df_combined = pd.concat([existing_df, df], ignore_index=True)
-                    df_new = df_combined.drop_duplicates(keep=False)
-                    
-                    # 如果没有新数据
-                    if df_new.empty:
-                        self.logger.info(f"没有新数据需要插入到表 {table_name}")
-                        return True
-                    
-                    self.logger.info(f"发现 {len(df_new)} 行新数据（去重后）")
-                    df = df_new
             
             # 清理列名
             df.columns = [col.replace('.', '_').replace('-', '_').replace(' ', '_') 
                          for col in df.columns]
+            if index_name:
+                index_name = index_name.replace('.', '_').replace('-', '_').replace(' ', '_')
             
-            # 插入数据
-            self._insert_dataframe(table_name, df)
+            # 根据模式处理数据
+            if mode == 'append':
+                # 直接插入，不检查重复
+                self.logger.info(f"使用 append 模式，直接插入 {len(df)} 行数据")
+                self._insert_dataframe(table_name, df)
+                
+            elif mode == 'skip':
+                # 忽略重复索引的数据，只插入新索引的数据
+                if not index_name:
+                    self.logger.error("skip 模式需要有索引列，但未找到索引")
+                    return False
+                
+                existing_df = self.load_table(table_name)
+                
+                if existing_df is not None and not existing_df.empty:
+                    # 检查索引列是否存在
+                    if index_name not in existing_df.columns:
+                        self.logger.error(f"索引列 '{index_name}' 不存在于表中")
+                        return False
+                    
+                    # 基于索引找出不重复的行
+                    existing_indices = set(existing_df[index_name].values)
+                    new_indices = set(df[index_name].values)
+                    
+                    # 只保留索引不重复的行
+                    indices_to_insert = new_indices - existing_indices
+                    
+                    # 如果没有新数据
+                    if not indices_to_insert:
+                        self.logger.info(f"没有新的索引数据需要插入到表 {table_name}")
+                        return True
+                    
+                    # 过滤出要插入的数据
+                    df_to_insert = df[df[index_name].isin(indices_to_insert)]
+                    
+                    self.logger.info(f"使用 skip 模式，基于索引过滤后有 {len(df_to_insert)} 行新数据")
+                    self._insert_dataframe(table_name, df_to_insert)
+                else:
+                    self.logger.info(f"表为空，插入 {len(df)} 行数据")
+                    self._insert_dataframe(table_name, df)
+                    
+            elif mode == 'update':
+                # 覆盖重复数据，基于索引更新
+                if not index_name:
+                    self.logger.error("update 模式需要有索引列，但未找到索引")
+                    return False
+                
+                existing_df = self.load_table(table_name)
+                
+                if existing_df is None or existing_df.empty:
+                    self.logger.info(f"表为空，直接插入 {len(df)} 行数据")
+                    self._insert_dataframe(table_name, df)
+                else:
+                    # 检查索引列是否存在
+                    if index_name not in existing_df.columns:
+                        self.logger.error(f"索引列 '{index_name}' 不存在于表中")
+                        return False
+                    
+                    # 获取所有列（排除索引列）
+                    data_columns = [col for col in df.columns if col != index_name]
+                    
+                    # 找出需要更新的行和需要插入的行
+                    existing_indices = set(existing_df[index_name].values)
+                    new_indices = set(df[index_name].values)
+                    
+                    indices_to_update = existing_indices & new_indices
+                    indices_to_insert = new_indices - existing_indices
+                    
+                    update_count = 0
+                    insert_count = 0
+                    
+                    # 更新重复的行
+                    if indices_to_update:
+                        self.logger.info(f"使用 update 模式，更新 {len(indices_to_update)} 行")
+                        df_to_update = df[df[index_name].isin(indices_to_update)]
+                        
+                        for _, row in df_to_update.iterrows():
+                            index_value = row[index_name]
+                            
+                            # 构建UPDATE语句
+                            set_clause = ', '.join([f'"{col}" = %s' for col in data_columns])
+                            update_sql = f"""
+                                UPDATE {table_name}
+                                SET {set_clause}
+                                WHERE "{index_name}" = %s
+                            """
+                            
+                            # 准备参数
+                            values = [None if pd.isna(row[col]) else row[col] for col in data_columns]
+                            values.append(index_value)
+                            
+                            self.cursor.execute(update_sql, values)
+                            if self.cursor.rowcount > 0:
+                                update_count += 1
+                        
+                        self.conn.commit()
+                        self.logger.info(f"成功更新 {update_count} 行数据")
+                    
+                    # 插入新的行
+                    if indices_to_insert:
+                        self.logger.info(f"插入 {len(indices_to_insert)} 行新数据")
+                        df_to_insert = df[df[index_name].isin(indices_to_insert)]
+                        self._insert_dataframe(table_name, df_to_insert)
+                        insert_count = len(df_to_insert)
+                    
+                    self.logger.info(f"update 模式完成: 更新 {update_count} 行, 插入 {insert_count} 行")
             
             return True
             
@@ -491,6 +722,114 @@ class EasyManager:
         except Exception as e:
             self.logger.error(f"获取表信息失败: {str(e)}")
             return {}
+    
+    @staticmethod
+    def help():
+        """
+        显示 EasyManager 的功能帮助信息
+        """
+        help_text = """
+╔════════════════════════════════════════════════════════════════════════════╗
+║                      EasyManager 使用帮助 (v2.1)                           ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📚 核心功能：
+
+  1. create_table(table_name, dataframe, overwrite=False)
+     └─ 创建表并导入数据
+     └─ 示例: em.create_table('my_table', df, overwrite=True)
+
+  2. add_columns(table_name, dataframe, merge_on_index=True)  ⭐ 新功能
+     └─ 在已存在的表中添加新列（自动屏蔽已存在的列）
+     └─ 示例: em.add_columns('my_table', df_new_cols)
+
+  3. insert_data(table_name, dataframe, mode='skip')  ⭐ 升级版
+     └─ 插入数据，支持三种模式：
+        • skip   - 忽略重复索引（默认）
+        • update - 覆盖重复索引的数据
+        • append - 直接追加，不检查重复
+     └─ 示例: em.insert_data('my_table', df, mode='skip')
+
+  4. load_table(table_name, limit=None)
+     └─ 从数据库导入表到 Python
+     └─ 示例: df = em.load_table('my_table', limit=100)
+
+  5. drop_table(table_name)
+     └─ 删除表
+     └─ 示例: em.drop_table('my_table')
+
+  6. list_tables(schema='public')
+     └─ 列出所有表
+     └─ 示例: tables = em.list_tables()
+
+  7. get_table_info(table_name)
+     └─ 获取表详细信息（列、行数等）
+     └─ 示例: info = em.get_table_info('my_table')
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 三种插入模式详解：
+
+  ┌─────────┬──────────┬──────────┬──────────┬───────────────────┐
+  │  模式   │ 检查方式 │ 需要索引 │   性能   │     适用场景      │
+  ├─────────┼──────────┼──────────┼──────────┼───────────────────┤
+  │ skip    │ 基于索引 │   ✅     │   中等   │ 增量更新，避免重复│
+  │ update  │ 基于索引 │   ✅     │   较慢   │ 数据修正，UPSERT  │
+  │ append  │ 不检查   │   ❌     │   最快   │ 快速批量导入      │
+  └─────────┴──────────┴──────────┴──────────┴───────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 快速示例：
+
+  # 1. 连接数据库
+  from easy_manager import EasyManager
+  import pandas as pd
+  
+  with EasyManager() as em:
+      
+      # 2. 创建表
+      df = pd.read_csv('data.csv', index_col=0)
+      em.create_table('stocks', df)
+      
+      # 3. 添加新列
+      df_new = pd.read_csv('new_factors.csv', index_col=0)
+      em.add_columns('stocks', df_new)
+      
+      # 4. 插入数据（三种模式）
+      em.insert_data('stocks', df, mode='skip')    # 忽略重复索引
+      em.insert_data('stocks', df, mode='update')  # 覆盖重复数据
+      em.insert_data('stocks', df, mode='append')  # 直接追加
+      
+      # 5. 导入表
+      df_loaded = em.load_table('stocks')
+      
+      # 6. 查询表信息
+      tables = em.list_tables()
+      info = em.get_table_info('stocks')
+      
+      # 7. 删除表
+      em.drop_table('stocks')
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  注意事项：
+
+  • skip 和 update 模式需要 DataFrame 有索引列
+  • 列名中的特殊字符（., -, 空格）会自动转换为 _
+  • 所有操作记录在 datadeal.log 文件中
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 更多信息：
+
+  • 完整手册：EasyManager完整使用手册.md
+  • 测试示例：test_new_features.py
+  • 在线帮助：EasyManager.help()
+
+╚════════════════════════════════════════════════════════════════════════════╝
+        """
+        print(help_text)
     
     def close(self):
         """关闭数据库连接"""
