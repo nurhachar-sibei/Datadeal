@@ -13119,3 +13119,1242 @@ psycopg2.errors.StringDataRightTruncation: 错误:  对于可变字符类型来�
 2025-11-18 10:55:09 | INFO | 成功删除表: test_insert_modes
 2025-11-18 10:55:09 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
 2025-11-18 10:55:09 | INFO | 数据库连接已关闭
+2025-11-18 13:30:25 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:30:25 | INFO | [Function: create_table started...]
+2025-11-18 13:30:25 | INFO | 表 test_add_columns 创建成功，包含 3 列
+2025-11-18 13:30:25 | INFO | 成功插入 10 行数据到表 test_add_columns
+2025-11-18 13:30:25 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:30:25 | INFO | [Function: add_columns started...]
+2025-11-18 13:30:25 | INFO | 表 test_add_columns 现有列: ['datetime', 'stock_A', 'stock_B']
+2025-11-18 13:30:25 | INFO | 识别到 2 个新列: ['stock_C', 'stock_D']
+2025-11-18 13:30:25 | INFO | 添加列 stock_C (类型: DOUBLE PRECISION)
+2025-11-18 13:30:25 | INFO | 添加列 stock_D (类型: DOUBLE PRECISION)
+2025-11-18 13:30:25 | INFO | [Function: load_table started...]
+2025-11-18 13:30:25 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:30:25 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:25 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 13:30:25 | INFO | 成功更新 10 行的新列数据
+2025-11-18 13:30:25 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:30:25 | INFO | [Function: load_table started...]
+2025-11-18 13:30:25 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:30:25 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:25 | INFO | 表 test_add_columns 信息: 5 列, 10 行
+2025-11-18 13:30:25 | INFO | [Function: drop_table started...]
+2025-11-18 13:30:25 | INFO | 成功删除表: test_add_columns
+2025-11-18 13:30:25 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
+2025-11-18 13:30:25 | INFO | 数据库连接已关闭
+2025-11-18 13:30:25 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:30:25 | INFO | [Function: create_table started...]
+2025-11-18 13:30:25 | INFO | 表 test_insert_modes 创建成功，包含 3 列
+2025-11-18 13:30:25 | INFO | 成功插入 5 行数据到表 test_insert_modes
+2025-11-18 13:30:25 | INFO | [Function: create_table completed, elapsed time: 0.02s]
+2025-11-18 13:30:26 | INFO | [Function: insert_data started...]
+2025-11-18 13:30:26 | INFO | [Function: load_table started...]
+2025-11-18 13:30:26 | INFO | 成功从表 test_insert_modes 加载数据，形状: (5, 3)
+2025-11-18 13:30:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:26 | INFO | 使用 skip 模式，基于索引过滤后有 2 行新数据
+2025-11-18 13:30:26 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:30:26 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:30:26 | INFO | [Function: load_table started...]
+2025-11-18 13:30:26 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:30:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:26 | INFO | [Function: insert_data started...]
+2025-11-18 13:30:26 | INFO | [Function: load_table started...]
+2025-11-18 13:30:26 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:30:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:26 | INFO | 使用 update 模式，更新 2 行
+2025-11-18 13:30:26 | INFO | 成功更新 2 行数据
+2025-11-18 13:30:26 | INFO | 插入 1 行新数据
+2025-11-18 13:30:26 | INFO | 成功插入 1 行数据到表 test_insert_modes
+2025-11-18 13:30:26 | INFO | update 模式完成: 更新 2 行, 插入 1 行
+2025-11-18 13:30:26 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:30:26 | INFO | [Function: load_table started...]
+2025-11-18 13:30:26 | INFO | 成功从表 test_insert_modes 加载数据，形状: (8, 3)
+2025-11-18 13:30:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:26 | INFO | [Function: insert_data started...]
+2025-11-18 13:30:26 | INFO | 使用 append 模式，直接插入 2 行数据
+2025-11-18 13:30:26 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:30:26 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:30:26 | INFO | [Function: load_table started...]
+2025-11-18 13:30:26 | INFO | 成功从表 test_insert_modes 加载数据，形状: (10, 3)
+2025-11-18 13:30:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:30:26 | INFO | [Function: drop_table started...]
+2025-11-18 13:30:26 | INFO | 成功删除表: test_insert_modes
+2025-11-18 13:30:26 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
+2025-11-18 13:30:26 | INFO | 数据库连接已关闭
+2025-11-18 13:35:15 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:35:15 | INFO | [Function: create_table started...]
+2025-11-18 13:35:15 | INFO | 表 stock_prices 创建成功，包含 3 列
+2025-11-18 13:35:15 | INFO | 成功插入 5 行数据到表 stock_prices
+2025-11-18 13:35:15 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 13:35:15 | INFO | [Function: add_columns started...]
+2025-11-18 13:35:15 | INFO | 表 stock_prices 现有列: ['date', 'AAPL', 'GOOGL']
+2025-11-18 13:35:15 | INFO | 识别到 2 个新列: ['MSFT', 'TSLA']
+2025-11-18 13:35:15 | INFO | 添加列 MSFT (类型: BIGINT)
+2025-11-18 13:35:15 | INFO | 添加列 TSLA (类型: BIGINT)
+2025-11-18 13:35:15 | INFO | [Function: load_table started...]
+2025-11-18 13:35:15 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:35:15 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:15 | INFO | 按索引列 'date' 合并数据
+2025-11-18 13:35:15 | INFO | 成功更新 5 行的新列数据
+2025-11-18 13:35:15 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:35:15 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:15 | INFO | [Function: load_table started...]
+2025-11-18 13:35:15 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:35:15 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:15 | INFO | 使用 skip 模式，基于索引过滤后有 3 行新数据
+2025-11-18 13:35:15 | INFO | 成功插入 3 行数据到表 stock_prices
+2025-11-18 13:35:15 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:35:15 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:15 | INFO | [Function: load_table started...]
+2025-11-18 13:35:15 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:35:15 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:15 | INFO | 使用 update 模式，更新 1 行
+2025-11-18 13:35:15 | INFO | 成功更新 1 行数据
+2025-11-18 13:35:15 | INFO | update 模式完成: 更新 1 行, 插入 0 行
+2025-11-18 13:35:15 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:35:15 | INFO | [Function: load_table started...]
+2025-11-18 13:35:15 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:35:15 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:15 | INFO | 表 stock_prices 信息: 5 列, 8 行
+2025-11-18 13:35:15 | INFO | [Function: drop_table started...]
+2025-11-18 13:35:15 | INFO | 成功删除表: stock_prices
+2025-11-18 13:35:15 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
+2025-11-18 13:35:15 | INFO | 数据库连接已关闭
+2025-11-18 13:35:33 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:35:33 | INFO | [Function: create_table started...]
+2025-11-18 13:35:33 | INFO | 表 test_add_columns 创建成功，包含 3 列
+2025-11-18 13:35:33 | INFO | 成功插入 10 行数据到表 test_add_columns
+2025-11-18 13:35:33 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:35:33 | INFO | [Function: add_columns started...]
+2025-11-18 13:35:33 | INFO | 表 test_add_columns 现有列: ['datetime', 'stock_A', 'stock_B']
+2025-11-18 13:35:33 | INFO | 识别到 2 个新列: ['stock_C', 'stock_D']
+2025-11-18 13:35:33 | INFO | 添加列 stock_C (类型: DOUBLE PRECISION)
+2025-11-18 13:35:33 | INFO | 添加列 stock_D (类型: DOUBLE PRECISION)
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 13:35:33 | INFO | 成功更新 10 行的新列数据
+2025-11-18 13:35:33 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | 表 test_add_columns 信息: 5 列, 10 行
+2025-11-18 13:35:33 | INFO | [Function: drop_table started...]
+2025-11-18 13:35:33 | INFO | 成功删除表: test_add_columns
+2025-11-18 13:35:33 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | 数据库连接已关闭
+2025-11-18 13:35:33 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:35:33 | INFO | [Function: create_table started...]
+2025-11-18 13:35:33 | INFO | 表 test_insert_modes 创建成功，包含 3 列
+2025-11-18 13:35:33 | INFO | 成功插入 5 行数据到表 test_insert_modes
+2025-11-18 13:35:33 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 13:35:33 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_insert_modes 加载数据，形状: (5, 3)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | 使用 skip 模式，基于索引过滤后有 2 行新数据
+2025-11-18 13:35:33 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:35:33 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | 使用 update 模式，更新 2 行
+2025-11-18 13:35:33 | INFO | 成功更新 2 行数据
+2025-11-18 13:35:33 | INFO | 插入 1 行新数据
+2025-11-18 13:35:33 | INFO | 成功插入 1 行数据到表 test_insert_modes
+2025-11-18 13:35:33 | INFO | update 模式完成: 更新 2 行, 插入 1 行
+2025-11-18 13:35:33 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_insert_modes 加载数据，形状: (8, 3)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:33 | INFO | 使用 append 模式，直接插入 2 行数据
+2025-11-18 13:35:33 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:35:33 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | [Function: load_table started...]
+2025-11-18 13:35:33 | INFO | 成功从表 test_insert_modes 加载数据，形状: (10, 3)
+2025-11-18 13:35:33 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | [Function: drop_table started...]
+2025-11-18 13:35:33 | INFO | 成功删除表: test_insert_modes
+2025-11-18 13:35:33 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:33 | INFO | 数据库连接已关闭
+2025-11-18 13:35:37 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:35:37 | INFO | [Function: create_table started...]
+2025-11-18 13:35:37 | INFO | 表 test_sample_data 创建成功，包含 6 列
+2025-11-18 13:35:37 | INFO | 成功插入 1043 行数据到表 test_sample_data
+2025-11-18 13:35:37 | INFO | [Function: create_table completed, elapsed time: 0.04s]
+2025-11-18 13:35:37 | INFO | [Function: add_columns started...]
+2025-11-18 13:35:37 | INFO | 表 test_sample_data 现有列: ['datetime', '000001_SZ', '000002_SZ', '000858_SZ', '002415_SZ', '002594_SZ']
+2025-11-18 13:35:37 | INFO | 识别到 5 个新列: ['600000_SH', '600036_SH', '600519_SH', '600887_SH', '601318_SH']
+2025-11-18 13:35:37 | INFO | 添加列 600000_SH (类型: DOUBLE PRECISION)
+2025-11-18 13:35:37 | INFO | 添加列 600036_SH (类型: DOUBLE PRECISION)
+2025-11-18 13:35:37 | INFO | 添加列 600519_SH (类型: DOUBLE PRECISION)
+2025-11-18 13:35:37 | INFO | 添加列 600887_SH (类型: DOUBLE PRECISION)
+2025-11-18 13:35:37 | INFO | 添加列 601318_SH (类型: DOUBLE PRECISION)
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 test_sample_data 加载数据，形状: (1043, 11)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 13:35:37 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 13:35:37 | INFO | 成功更新 1043 行的新列数据
+2025-11-18 13:35:37 | INFO | [Function: add_columns completed, elapsed time: 0.46s]
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 test_sample_data 加载数据，形状: (1043, 11)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 13:35:37 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 test_sample_data 加载数据，形状: (1043, 11)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 13:35:37 | INFO | 使用 update 模式，更新 100 行
+2025-11-18 13:35:37 | ERROR | 插入数据到表 test_sample_data 失败: 错误:  关系 "test_sample_data" 的 "000858_SZ_1" 字段不存在
+LINE 3: ...39785967872185, "601318_SH" = 1.7102393262452946, "000858_SZ...
+                                                             ^
+
+2025-11-18 13:35:37 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 542, in insert_data
+    self.cursor.execute(update_sql, values)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\anaconda\Lib\site-packages\psycopg2\extras.py", line 236, in execute
+    return super().execute(query, vars)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: 错误:  关系 "test_sample_data" 的 "000858_SZ_1" 字段不存在
+LINE 3: ...39785967872185, "601318_SH" = 1.7102393262452946, "000858_SZ...
+                                                             ^
+
+
+2025-11-18 13:35:37 | INFO | [Function: insert_data completed, elapsed time: 0.02s]
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 test_sample_data 加载数据，形状: (5, 11)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | [Function: drop_table started...]
+2025-11-18 13:35:37 | INFO | 成功删除表: test_sample_data
+2025-11-18 13:35:37 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | 数据库连接已关闭
+2025-11-18 13:35:37 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:35:37 | INFO | [Function: create_table started...]
+2025-11-18 13:35:37 | INFO | 表 stock_prices 创建成功，包含 3 列
+2025-11-18 13:35:37 | INFO | 成功插入 5 行数据到表 stock_prices
+2025-11-18 13:35:37 | INFO | [Function: create_table completed, elapsed time: 0.02s]
+2025-11-18 13:35:37 | INFO | [Function: add_columns started...]
+2025-11-18 13:35:37 | INFO | 表 stock_prices 现有列: ['date', 'AAPL', 'GOOGL']
+2025-11-18 13:35:37 | INFO | 识别到 2 个新列: ['MSFT', 'TSLA']
+2025-11-18 13:35:37 | INFO | 添加列 MSFT (类型: BIGINT)
+2025-11-18 13:35:37 | INFO | 添加列 TSLA (类型: BIGINT)
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | 按索引列 'date' 合并数据
+2025-11-18 13:35:37 | INFO | 成功更新 5 行的新列数据
+2025-11-18 13:35:37 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 13:35:37 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | 使用 skip 模式，基于索引过滤后有 3 行新数据
+2025-11-18 13:35:37 | INFO | 成功插入 3 行数据到表 stock_prices
+2025-11-18 13:35:37 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | [Function: insert_data started...]
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | 使用 update 模式，更新 1 行
+2025-11-18 13:35:37 | INFO | 成功更新 1 行数据
+2025-11-18 13:35:37 | INFO | update 模式完成: 更新 1 行, 插入 0 行
+2025-11-18 13:35:37 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:35:37 | INFO | [Function: load_table started...]
+2025-11-18 13:35:37 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:35:37 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | 表 stock_prices 信息: 5 列, 8 行
+2025-11-18 13:35:37 | INFO | [Function: drop_table started...]
+2025-11-18 13:35:37 | INFO | 成功删除表: stock_prices
+2025-11-18 13:35:37 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:35:37 | INFO | 数据库连接已关闭
+2025-11-18 13:36:18 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:36:18 | INFO | [Function: create_table started...]
+2025-11-18 13:36:18 | INFO | 表 test_add_columns 创建成功，包含 3 列
+2025-11-18 13:36:18 | INFO | 成功插入 10 行数据到表 test_add_columns
+2025-11-18 13:36:18 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:36:18 | INFO | [Function: add_columns started...]
+2025-11-18 13:36:18 | INFO | 表 test_add_columns 现有列: ['datetime', 'stock_A', 'stock_B']
+2025-11-18 13:36:18 | INFO | 识别到 2 个新列: ['stock_C', 'stock_D']
+2025-11-18 13:36:18 | INFO | 添加列 stock_C (类型: DOUBLE PRECISION)
+2025-11-18 13:36:18 | INFO | 添加列 stock_D (类型: DOUBLE PRECISION)
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 13:36:18 | INFO | 成功更新 10 行的新列数据
+2025-11-18 13:36:18 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | 表 test_add_columns 信息: 5 列, 10 行
+2025-11-18 13:36:18 | INFO | [Function: drop_table started...]
+2025-11-18 13:36:18 | INFO | 成功删除表: test_add_columns
+2025-11-18 13:36:18 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | 数据库连接已关闭
+2025-11-18 13:36:18 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:36:18 | INFO | [Function: create_table started...]
+2025-11-18 13:36:18 | INFO | 表 test_insert_modes 创建成功，包含 3 列
+2025-11-18 13:36:18 | INFO | 成功插入 5 行数据到表 test_insert_modes
+2025-11-18 13:36:18 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 13:36:18 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_insert_modes 加载数据，形状: (5, 3)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | 使用 skip 模式，基于索引过滤后有 2 行新数据
+2025-11-18 13:36:18 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:36:18 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | 使用 update 模式，更新 2 行
+2025-11-18 13:36:18 | INFO | 成功更新 2 行数据
+2025-11-18 13:36:18 | INFO | 插入 1 行新数据
+2025-11-18 13:36:18 | INFO | 成功插入 1 行数据到表 test_insert_modes
+2025-11-18 13:36:18 | INFO | update 模式完成: 更新 2 行, 插入 1 行
+2025-11-18 13:36:18 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_insert_modes 加载数据，形状: (8, 3)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:18 | INFO | 使用 append 模式，直接插入 2 行数据
+2025-11-18 13:36:18 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:36:18 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | [Function: load_table started...]
+2025-11-18 13:36:18 | INFO | 成功从表 test_insert_modes 加载数据，形状: (10, 3)
+2025-11-18 13:36:18 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | [Function: drop_table started...]
+2025-11-18 13:36:18 | INFO | 成功删除表: test_insert_modes
+2025-11-18 13:36:18 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:18 | INFO | 数据库连接已关闭
+2025-11-18 13:36:24 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:36:24 | INFO | [Function: create_table started...]
+2025-11-18 13:36:24 | INFO | 表 stock_prices 创建成功，包含 3 列
+2025-11-18 13:36:24 | INFO | 成功插入 5 行数据到表 stock_prices
+2025-11-18 13:36:24 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:36:24 | INFO | [Function: add_columns started...]
+2025-11-18 13:36:24 | INFO | 表 stock_prices 现有列: ['date', 'AAPL', 'GOOGL']
+2025-11-18 13:36:24 | INFO | 识别到 2 个新列: ['MSFT', 'TSLA']
+2025-11-18 13:36:24 | INFO | 添加列 MSFT (类型: BIGINT)
+2025-11-18 13:36:24 | INFO | 添加列 TSLA (类型: BIGINT)
+2025-11-18 13:36:24 | INFO | [Function: load_table started...]
+2025-11-18 13:36:24 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:36:24 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:24 | INFO | 按索引列 'date' 合并数据
+2025-11-18 13:36:24 | INFO | 成功更新 5 行的新列数据
+2025-11-18 13:36:24 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:36:24 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:24 | INFO | [Function: load_table started...]
+2025-11-18 13:36:24 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:36:24 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:24 | INFO | 使用 skip 模式，基于索引过滤后有 3 行新数据
+2025-11-18 13:36:24 | INFO | 成功插入 3 行数据到表 stock_prices
+2025-11-18 13:36:24 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:36:24 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:24 | INFO | [Function: load_table started...]
+2025-11-18 13:36:24 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:36:24 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:24 | INFO | 使用 update 模式，更新 1 行
+2025-11-18 13:36:24 | INFO | 成功更新 1 行数据
+2025-11-18 13:36:24 | INFO | update 模式完成: 更新 1 行, 插入 0 行
+2025-11-18 13:36:24 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:36:24 | INFO | [Function: load_table started...]
+2025-11-18 13:36:24 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:36:24 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:24 | INFO | 表 stock_prices 信息: 5 列, 8 行
+2025-11-18 13:36:24 | INFO | [Function: drop_table started...]
+2025-11-18 13:36:24 | INFO | 成功删除表: stock_prices
+2025-11-18 13:36:24 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:24 | INFO | 数据库连接已关闭
+2025-11-18 13:36:40 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:36:40 | INFO | [Function: create_table started...]
+2025-11-18 13:36:40 | INFO | 表 test_add_columns 创建成功，包含 3 列
+2025-11-18 13:36:40 | INFO | 成功插入 10 行数据到表 test_add_columns
+2025-11-18 13:36:40 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:36:40 | INFO | [Function: add_columns started...]
+2025-11-18 13:36:40 | INFO | 表 test_add_columns 现有列: ['datetime', 'stock_A', 'stock_B']
+2025-11-18 13:36:40 | INFO | 识别到 2 个新列: ['stock_C', 'stock_D']
+2025-11-18 13:36:40 | INFO | 添加列 stock_C (类型: DOUBLE PRECISION)
+2025-11-18 13:36:40 | INFO | 添加列 stock_D (类型: DOUBLE PRECISION)
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 13:36:40 | INFO | 成功更新 10 行的新列数据
+2025-11-18 13:36:40 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | 表 test_add_columns 信息: 5 列, 10 行
+2025-11-18 13:36:40 | INFO | [Function: drop_table started...]
+2025-11-18 13:36:40 | INFO | 成功删除表: test_add_columns
+2025-11-18 13:36:40 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | 数据库连接已关闭
+2025-11-18 13:36:40 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:36:40 | INFO | [Function: create_table started...]
+2025-11-18 13:36:40 | INFO | 表 test_insert_modes 创建成功，包含 3 列
+2025-11-18 13:36:40 | INFO | 成功插入 5 行数据到表 test_insert_modes
+2025-11-18 13:36:40 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 13:36:40 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_insert_modes 加载数据，形状: (5, 3)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | 使用 skip 模式，基于索引过滤后有 2 行新数据
+2025-11-18 13:36:40 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:36:40 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | 使用 update 模式，更新 2 行
+2025-11-18 13:36:40 | INFO | 成功更新 2 行数据
+2025-11-18 13:36:40 | INFO | 插入 1 行新数据
+2025-11-18 13:36:40 | INFO | 成功插入 1 行数据到表 test_insert_modes
+2025-11-18 13:36:40 | INFO | update 模式完成: 更新 2 行, 插入 1 行
+2025-11-18 13:36:40 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_insert_modes 加载数据，形状: (8, 3)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:40 | INFO | 使用 append 模式，直接插入 2 行数据
+2025-11-18 13:36:40 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:36:40 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | [Function: load_table started...]
+2025-11-18 13:36:40 | INFO | 成功从表 test_insert_modes 加载数据，形状: (10, 3)
+2025-11-18 13:36:40 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | [Function: drop_table started...]
+2025-11-18 13:36:40 | INFO | 成功删除表: test_insert_modes
+2025-11-18 13:36:40 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:40 | INFO | 数据库连接已关闭
+2025-11-18 13:36:44 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:36:44 | INFO | [Function: create_table started...]
+2025-11-18 13:36:44 | INFO | 表 stock_prices 创建成功，包含 3 列
+2025-11-18 13:36:44 | INFO | 成功插入 5 行数据到表 stock_prices
+2025-11-18 13:36:44 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:36:44 | INFO | [Function: add_columns started...]
+2025-11-18 13:36:44 | INFO | 表 stock_prices 现有列: ['date', 'AAPL', 'GOOGL']
+2025-11-18 13:36:44 | INFO | 识别到 2 个新列: ['MSFT', 'TSLA']
+2025-11-18 13:36:44 | INFO | 添加列 MSFT (类型: BIGINT)
+2025-11-18 13:36:44 | INFO | 添加列 TSLA (类型: BIGINT)
+2025-11-18 13:36:44 | INFO | [Function: load_table started...]
+2025-11-18 13:36:44 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:36:44 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | 按索引列 'date' 合并数据
+2025-11-18 13:36:44 | INFO | 成功更新 5 行的新列数据
+2025-11-18 13:36:44 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:36:44 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:44 | INFO | [Function: load_table started...]
+2025-11-18 13:36:44 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 13:36:44 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | 使用 skip 模式，基于索引过滤后有 3 行新数据
+2025-11-18 13:36:44 | INFO | 成功插入 3 行数据到表 stock_prices
+2025-11-18 13:36:44 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | [Function: insert_data started...]
+2025-11-18 13:36:44 | INFO | [Function: load_table started...]
+2025-11-18 13:36:44 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:36:44 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | 使用 update 模式，更新 1 行
+2025-11-18 13:36:44 | INFO | 成功更新 1 行数据
+2025-11-18 13:36:44 | INFO | update 模式完成: 更新 1 行, 插入 0 行
+2025-11-18 13:36:44 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | [Function: load_table started...]
+2025-11-18 13:36:44 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 13:36:44 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | 表 stock_prices 信息: 5 列, 8 行
+2025-11-18 13:36:44 | INFO | [Function: drop_table started...]
+2025-11-18 13:36:44 | INFO | 成功删除表: stock_prices
+2025-11-18 13:36:44 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:36:44 | INFO | 数据库连接已关闭
+2025-11-18 13:41:52 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:41:52 | INFO | [Function: create_table started...]
+2025-11-18 13:41:52 | INFO | 表 test_add_columns 创建成功，包含 3 列
+2025-11-18 13:41:52 | INFO | 成功插入 10 行数据到表 test_add_columns
+2025-11-18 13:41:52 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 13:41:52 | INFO | [Function: add_columns started...]
+2025-11-18 13:41:52 | INFO | 表 test_add_columns 现有列: ['datetime', 'stock_A', 'stock_B']
+2025-11-18 13:41:52 | INFO | 识别到 2 个新列: ['stock_C', 'stock_D']
+2025-11-18 13:41:52 | INFO | 添加列 stock_C (类型: DOUBLE PRECISION)
+2025-11-18 13:41:52 | INFO | 添加列 stock_D (类型: DOUBLE PRECISION)
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 13:41:52 | INFO | 成功更新 10 行的新列数据
+2025-11-18 13:41:52 | INFO | [Function: add_columns completed, elapsed time: 0.02s]
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | 表 test_add_columns 信息: 5 列, 10 行
+2025-11-18 13:41:52 | INFO | [Function: drop_table started...]
+2025-11-18 13:41:52 | INFO | 成功删除表: test_add_columns
+2025-11-18 13:41:52 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | 数据库连接已关闭
+2025-11-18 13:41:52 | INFO | 数据库连接成功: test_data_base
+2025-11-18 13:41:52 | INFO | [Function: create_table started...]
+2025-11-18 13:41:52 | INFO | 表 test_insert_modes 创建成功，包含 3 列
+2025-11-18 13:41:52 | INFO | 成功插入 5 行数据到表 test_insert_modes
+2025-11-18 13:41:52 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 13:41:52 | INFO | [Function: insert_data started...]
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_insert_modes 加载数据，形状: (5, 3)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | 使用 skip 模式，基于索引过滤后有 2 行新数据
+2025-11-18 13:41:52 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:41:52 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | [Function: insert_data started...]
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | 使用 update 模式，更新 2 行
+2025-11-18 13:41:52 | INFO | 成功更新 2 行数据
+2025-11-18 13:41:52 | INFO | 插入 1 行新数据
+2025-11-18 13:41:52 | INFO | 成功插入 1 行数据到表 test_insert_modes
+2025-11-18 13:41:52 | INFO | update 模式完成: 更新 2 行, 插入 1 行
+2025-11-18 13:41:52 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_insert_modes 加载数据，形状: (8, 3)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | [Function: insert_data started...]
+2025-11-18 13:41:52 | INFO | 使用 append 模式，直接插入 2 行数据
+2025-11-18 13:41:52 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 13:41:52 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | [Function: load_table started...]
+2025-11-18 13:41:52 | INFO | 成功从表 test_insert_modes 加载数据，形状: (10, 3)
+2025-11-18 13:41:52 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 13:41:52 | INFO | [Function: drop_table started...]
+2025-11-18 13:41:52 | INFO | 成功删除表: test_insert_modes
+2025-11-18 13:41:52 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
+2025-11-18 13:41:52 | INFO | 数据库连接已关闭
+2025-11-18 14:00:51 | INFO | 数据库连接成功: test_data_base
+2025-11-18 14:00:51 | INFO | [Function: create_table started...]
+2025-11-18 14:00:51 | INFO | 表 test_add_columns 创建成功，包含 3 列
+2025-11-18 14:00:51 | INFO | 成功插入 10 行数据到表 test_add_columns
+2025-11-18 14:00:51 | INFO | [Function: create_table completed, elapsed time: 0.06s]
+2025-11-18 14:00:51 | INFO | [Function: add_columns started...]
+2025-11-18 14:00:51 | INFO | 表 test_add_columns 现有列: ['datetime', 'stock_A', 'stock_B']
+2025-11-18 14:00:51 | INFO | 识别到 2 个新列: ['stock_C', 'stock_D']
+2025-11-18 14:00:51 | INFO | 添加列 stock_C (类型: DOUBLE PRECISION)
+2025-11-18 14:00:51 | INFO | 添加列 stock_D (类型: DOUBLE PRECISION)
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | 按索引列 'datetime' 合并数据
+2025-11-18 14:00:51 | INFO | 成功更新 10 行的新列数据
+2025-11-18 14:00:51 | INFO | [Function: add_columns completed, elapsed time: 0.03s]
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_add_columns 加载数据，形状: (10, 5)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | 表 test_add_columns 信息: 5 列, 10 行
+2025-11-18 14:00:51 | INFO | [Function: drop_table started...]
+2025-11-18 14:00:51 | INFO | 成功删除表: test_add_columns
+2025-11-18 14:00:51 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
+2025-11-18 14:00:51 | INFO | 数据库连接已关闭
+2025-11-18 14:00:51 | INFO | 数据库连接成功: test_data_base
+2025-11-18 14:00:51 | INFO | [Function: create_table started...]
+2025-11-18 14:00:51 | INFO | 表 test_insert_modes 创建成功，包含 3 列
+2025-11-18 14:00:51 | INFO | 成功插入 5 行数据到表 test_insert_modes
+2025-11-18 14:00:51 | INFO | [Function: create_table completed, elapsed time: 0.02s]
+2025-11-18 14:00:51 | INFO | [Function: insert_data started...]
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_insert_modes 加载数据，形状: (5, 3)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | 使用 skip 模式，基于索引过滤后有 2 行新数据
+2025-11-18 14:00:51 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 14:00:51 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | [Function: insert_data started...]
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_insert_modes 加载数据，形状: (7, 3)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | 使用 update 模式，更新 2 行
+2025-11-18 14:00:51 | INFO | 成功更新 2 行数据
+2025-11-18 14:00:51 | INFO | 插入 1 行新数据
+2025-11-18 14:00:51 | INFO | 成功插入 1 行数据到表 test_insert_modes
+2025-11-18 14:00:51 | INFO | update 模式完成: 更新 2 行, 插入 1 行
+2025-11-18 14:00:51 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_insert_modes 加载数据，形状: (8, 3)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | [Function: insert_data started...]
+2025-11-18 14:00:51 | INFO | 使用 append 模式，直接插入 2 行数据
+2025-11-18 14:00:51 | INFO | 成功插入 2 行数据到表 test_insert_modes
+2025-11-18 14:00:51 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | [Function: load_table started...]
+2025-11-18 14:00:51 | INFO | 成功从表 test_insert_modes 加载数据，形状: (10, 3)
+2025-11-18 14:00:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:00:51 | INFO | [Function: drop_table started...]
+2025-11-18 14:00:51 | INFO | 成功删除表: test_insert_modes
+2025-11-18 14:00:51 | INFO | [Function: drop_table completed, elapsed time: 0.01s]
+2025-11-18 14:00:51 | INFO | 数据库连接已关闭
+2025-11-18 14:05:26 | INFO | 数据库连接成功: test_data_base
+2025-11-18 14:05:26 | INFO | [Function: create_table started...]
+2025-11-18 14:05:26 | INFO | 表 stock_prices 创建成功，包含 3 列
+2025-11-18 14:05:26 | INFO | 成功插入 5 行数据到表 stock_prices
+2025-11-18 14:05:26 | INFO | [Function: create_table completed, elapsed time: 0.05s]
+2025-11-18 14:05:26 | INFO | [Function: add_columns started...]
+2025-11-18 14:05:26 | INFO | 表 stock_prices 现有列: ['date', 'AAPL', 'GOOGL']
+2025-11-18 14:05:26 | INFO | 识别到 2 个新列: ['MSFT', 'TSLA']
+2025-11-18 14:05:26 | INFO | 添加列 MSFT (类型: BIGINT)
+2025-11-18 14:05:26 | INFO | 添加列 TSLA (类型: BIGINT)
+2025-11-18 14:05:26 | INFO | [Function: load_table started...]
+2025-11-18 14:05:26 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 14:05:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:05:26 | INFO | 按索引列 'date' 合并数据
+2025-11-18 14:05:26 | INFO | 成功更新 5 行的新列数据
+2025-11-18 14:05:26 | INFO | [Function: add_columns completed, elapsed time: 0.03s]
+2025-11-18 14:05:26 | INFO | [Function: insert_data started...]
+2025-11-18 14:05:26 | INFO | [Function: load_table started...]
+2025-11-18 14:05:26 | INFO | 成功从表 stock_prices 加载数据，形状: (5, 5)
+2025-11-18 14:05:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:05:26 | INFO | 使用 skip 模式，基于索引过滤后有 3 行新数据
+2025-11-18 14:05:26 | INFO | 成功插入 3 行数据到表 stock_prices
+2025-11-18 14:05:26 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 14:05:26 | INFO | [Function: insert_data started...]
+2025-11-18 14:05:26 | INFO | [Function: load_table started...]
+2025-11-18 14:05:26 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 14:05:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:05:26 | INFO | 使用 update 模式，更新 1 行
+2025-11-18 14:05:26 | INFO | 成功更新 1 行数据
+2025-11-18 14:05:26 | INFO | update 模式完成: 更新 1 行, 插入 0 行
+2025-11-18 14:05:26 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 14:05:26 | INFO | [Function: load_table started...]
+2025-11-18 14:05:26 | INFO | 成功从表 stock_prices 加载数据，形状: (8, 5)
+2025-11-18 14:05:26 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 14:05:26 | INFO | 表 stock_prices 信息: 5 列, 8 行
+2025-11-18 14:05:26 | INFO | [Function: drop_table started...]
+2025-11-18 14:05:26 | INFO | 成功删除表: stock_prices
+2025-11-18 14:05:26 | INFO | [Function: drop_table completed, elapsed time: 0.00s]
+2025-11-18 14:05:26 | INFO | 数据库连接已关闭
+2025-11-18 14:33:30 | INFO | 数据库连接成功: test_data_base
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 找到 0 个表
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行, 208 kB
+2025-11-18 14:33:30 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行, 208 kB
+2025-11-18 14:33:30 | INFO | 表 sample_pb_ratio 信息: 16 列, 1043 行, 208 kB
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 找到 3 个表
+2025-11-18 14:33:30 | INFO | 数据库连接已关闭
+2025-11-18 16:27:25 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:27:25 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:27:25 | INFO | [Function: create_table started...]
+2025-11-18 16:27:25 | ERROR | 创建表 test_long_table 失败: 'LongManager' object has no attribute '_clean_column_name'
+2025-11-18 16:27:25 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 1144, in create_table
+    df.columns = [self._clean_column_name(col) for col in df.columns]
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'LongManager' object has no attribute '_clean_column_name'
+
+2025-11-18 16:27:25 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 16:27:25 | INFO | [Function: insert_data started...]
+2025-11-18 16:27:25 | ERROR | 插入数据到表 test_long_table 失败: 'LongManager' object has no attribute '_clean_column_name'
+2025-11-18 16:27:25 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 1233, in insert_data
+    df.columns = [self._clean_column_name(col) for col in df.columns]
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'LongManager' object has no attribute '_clean_column_name'
+
+2025-11-18 16:27:25 | ERROR | 请优先检查数据格式问题,注:所有的时间格式都需要pd.to_datetime后方可录入
+2025-11-18 16:27:25 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 16:27:25 | INFO | [Function: load_table started...]
+2025-11-18 16:27:25 | ERROR | 表 test_long_table 不存在
+2025-11-18 16:27:25 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:27:25 | INFO | 数据库连接已关闭
+2025-11-18 16:28:17 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:28:17 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:28:17 | INFO | [Function: create_table started...]
+2025-11-18 16:28:17 | ERROR | 创建表 test_long_table 失败: 'LongManager' object has no attribute '_clean_column_name'
+2025-11-18 16:28:17 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 1144, in create_table
+    df.columns = [self._clean_column_name(col) for col in df.columns]
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'LongManager' object has no attribute '_clean_column_name'
+
+2025-11-18 16:28:17 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 16:28:17 | INFO | [Function: insert_data started...]
+2025-11-18 16:28:17 | ERROR | 插入数据到表 test_long_table 失败: 'LongManager' object has no attribute '_clean_column_name'
+2025-11-18 16:28:17 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "d:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 1233, in insert_data
+    df.columns = [self._clean_column_name(col) for col in df.columns]
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'LongManager' object has no attribute '_clean_column_name'
+
+2025-11-18 16:28:17 | ERROR | 请优先检查数据格式问题,注:所有的时间格式都需要pd.to_datetime后方可录入
+2025-11-18 16:28:17 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 16:28:17 | INFO | [Function: load_table started...]
+2025-11-18 16:28:17 | ERROR | 表 test_long_table 不存在
+2025-11-18 16:28:17 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:28:17 | INFO | 数据库连接已关闭
+2025-11-18 16:30:43 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:30:43 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:30:43 | INFO | 数据库连接已关闭
+2025-11-18 16:32:12 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:32:12 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:32:12 | INFO | [Function: create_table started...]
+2025-11-18 16:32:12 | ERROR | 创建表 test_long_table 失败: 'LongManager' object has no attribute '_clean_column_name'
+2025-11-18 16:32:12 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "D:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 1144, in create_table
+    df.columns = [self._clean_column_name(col) for col in df.columns]
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'LongManager' object has no attribute '_clean_column_name'
+
+2025-11-18 16:32:12 | INFO | [Function: create_table completed, elapsed time: 0.01s]
+2025-11-18 16:32:12 | INFO | [Function: insert_data started...]
+2025-11-18 16:32:12 | ERROR | 插入数据到表 test_long_table 失败: 'LongManager' object has no attribute '_clean_column_name'
+2025-11-18 16:32:12 | ERROR | 详细错误信息: Traceback (most recent call last):
+  File "D:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 1233, in insert_data
+    df.columns = [self._clean_column_name(col) for col in df.columns]
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'LongManager' object has no attribute '_clean_column_name'
+
+2025-11-18 16:32:12 | ERROR | 请优先检查数据格式问题,注:所有的时间格式都需要pd.to_datetime后方可录入
+2025-11-18 16:32:12 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 16:32:12 | INFO | [Function: load_table started...]
+2025-11-18 16:32:12 | ERROR | 表 test_long_table 不存在
+2025-11-18 16:32:12 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:32:12 | INFO | 数据库连接已关闭
+2025-11-18 16:34:14 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:34:14 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:34:14 | INFO | [Function: create_table started...]
+2025-11-18 16:34:14 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:34:14 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:34:14 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:34:14 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:34:14 | INFO | [Function: create_table completed, elapsed time: 0.10s]
+2025-11-18 16:34:14 | ERROR | 获取表信息失败: 'gbk' codec can't encode character '\U0001f4ca' in position 0: illegal multibyte sequence
+2025-11-18 16:34:14 | ERROR | 详细错误: Traceback (most recent call last):
+  File "D:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 857, in get_table_info
+    self._print_table_info(info)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 871, in _print_table_info
+    print(f"📊 表信息: {info['table_name']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'gbk' codec can't encode character '\U0001f4ca' in position 0: illegal multibyte sequence
+
+2025-11-18 16:34:14 | INFO | [Function: insert_data started...]
+2025-11-18 16:34:16 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:34:16 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:34:16 | INFO | [Function: insert_data completed, elapsed time: 1.21s]
+2025-11-18 16:34:16 | INFO | [Function: load_table started...]
+2025-11-18 16:34:16 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:34:16 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:34:16 | INFO | [Function: insert_data started...]
+2025-11-18 16:34:16 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:34:16 | INFO | 插入 1 行新数据
+2025-11-18 16:34:16 | INFO | 更新 2 行数据
+2025-11-18 16:34:16 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:34:16 | INFO | [Function: load_table started...]
+2025-11-18 16:34:16 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:34:16 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:34:16 | INFO | [Function: add_columns started...]
+2025-11-18 16:34:16 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:34:16 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:34:16 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:34:16 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:34:16 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:34:16 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:34:16 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:34:16 | INFO | [Function: load_table started...]
+2025-11-18 16:34:16 | INFO | 成功从表 test_long_table 加载数据，形状: (10, 8)
+2025-11-18 16:34:16 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:34:16 | INFO | [Function: create_table started...]
+2025-11-18 16:34:16 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:34:16 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:34:16 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:34:16 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:34:16 | INFO | [Function: create_table completed, elapsed time: 0.08s]
+2025-11-18 16:34:16 | ERROR | 获取表信息失败: 'gbk' codec can't encode character '\U0001f4ca' in position 0: illegal multibyte sequence
+2025-11-18 16:34:16 | ERROR | 详细错误: Traceback (most recent call last):
+  File "D:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 857, in get_table_info
+    self._print_table_info(info)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\program_learning\github\factor_frame\Datadeal\easy_manager.py", line 871, in _print_table_info
+    print(f"📊 表信息: {info['table_name']}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'gbk' codec can't encode character '\U0001f4ca' in position 0: illegal multibyte sequence
+
+2025-11-18 16:34:16 | INFO | [Function: load_table started...]
+2025-11-18 16:34:16 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:34:16 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:34:16 | ERROR | 获取表列表失败: 'gbk' codec can't encode character '\U0001f4cb' in position 0: illegal multibyte sequence
+2025-11-18 16:34:16 | ERROR | 获取表列表失败: 'gbk' codec can't encode character '\U0001f4cb' in position 0: illegal multibyte sequence
+2025-11-18 16:34:16 | INFO | 数据库连接已关闭
+2025-11-18 16:35:09 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:35:09 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:35:09 | INFO | [Function: create_table started...]
+2025-11-18 16:35:09 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:35:09 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:35:09 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:35:09 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:35:09 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:35:09 | INFO | [Function: create_table completed, elapsed time: 0.09s]
+2025-11-18 16:35:09 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:35:09 | INFO | [Function: insert_data started...]
+2025-11-18 16:35:09 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:35:09 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:35:09 | INFO | [Function: insert_data completed, elapsed time: 0.28s]
+2025-11-18 16:35:09 | INFO | [Function: load_table started...]
+2025-11-18 16:35:09 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:35:09 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:35:09 | INFO | [Function: insert_data started...]
+2025-11-18 16:35:09 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:35:09 | INFO | 插入 1 行新数据
+2025-11-18 16:35:09 | INFO | 更新 2 行数据
+2025-11-18 16:35:09 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:35:09 | INFO | [Function: load_table started...]
+2025-11-18 16:35:09 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:35:09 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:35:09 | INFO | [Function: add_columns started...]
+2025-11-18 16:35:09 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:35:09 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:35:09 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:35:09 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:35:09 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:35:09 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:35:09 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:35:09 | INFO | [Function: load_table started...]
+2025-11-18 16:35:09 | INFO | 成功从表 test_long_table 加载数据，形状: (10, 8)
+2025-11-18 16:35:09 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:35:09 | INFO | [Function: create_table started...]
+2025-11-18 16:35:09 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:35:09 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:35:09 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:35:09 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:35:09 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:35:09 | INFO | [Function: create_table completed, elapsed time: 0.09s]
+2025-11-18 16:35:09 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:35:09 | INFO | [Function: load_table started...]
+2025-11-18 16:35:09 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:35:09 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:35:09 | ERROR | 获取表列表失败: 'gbk' codec can't encode character '\U0001f4cb' in position 0: illegal multibyte sequence
+2025-11-18 16:35:09 | ERROR | 获取表列表失败: 'gbk' codec can't encode character '\U0001f4cb' in position 0: illegal multibyte sequence
+2025-11-18 16:35:09 | INFO | 数据库连接已关闭
+2025-11-18 16:36:18 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:36:18 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:36:18 | INFO | [Function: create_table started...]
+2025-11-18 16:36:18 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:36:18 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:36:18 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:36:18 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:36:18 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:36:18 | INFO | [Function: create_table completed, elapsed time: 0.10s]
+2025-11-18 16:36:18 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:36:18 | INFO | [Function: insert_data started...]
+2025-11-18 16:36:19 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:36:19 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:36:19 | INFO | [Function: insert_data completed, elapsed time: 0.31s]
+2025-11-18 16:36:19 | INFO | [Function: load_table started...]
+2025-11-18 16:36:19 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:36:19 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:36:19 | INFO | [Function: insert_data started...]
+2025-11-18 16:36:19 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:36:19 | INFO | 插入 1 行新数据
+2025-11-18 16:36:19 | INFO | 更新 2 行数据
+2025-11-18 16:36:19 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:36:19 | INFO | [Function: load_table started...]
+2025-11-18 16:36:19 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:36:19 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:36:19 | INFO | [Function: add_columns started...]
+2025-11-18 16:36:19 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:36:19 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:36:19 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:36:19 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:36:19 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:36:19 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:36:19 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:36:19 | INFO | [Function: load_table started...]
+2025-11-18 16:36:19 | INFO | 成功从表 test_long_table 加载数据，形状: (10, 8)
+2025-11-18 16:36:19 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:36:19 | INFO | [Function: create_table started...]
+2025-11-18 16:36:19 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:36:19 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:36:19 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:36:19 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:36:19 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:36:19 | INFO | [Function: create_table completed, elapsed time: 0.11s]
+2025-11-18 16:36:19 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:36:19 | INFO | [Function: load_table started...]
+2025-11-18 16:36:19 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:36:19 | INFO | [Function: load_table completed, elapsed time: 0.02s]
+2025-11-18 16:36:19 | INFO | 找到 1 个表
+2025-11-18 16:36:19 | INFO | 找到 1 个表
+2025-11-18 16:36:19 | INFO | 数据库连接已关闭
+2025-11-18 16:37:06 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:37:06 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:37:06 | INFO | [Function: create_table started...]
+2025-11-18 16:37:06 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:37:06 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:37:06 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:37:06 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:37:06 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:37:06 | INFO | [Function: create_table completed, elapsed time: 0.08s]
+2025-11-18 16:37:06 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:37:06 | INFO | [Function: insert_data started...]
+2025-11-18 16:37:06 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:37:06 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:37:06 | INFO | [Function: insert_data completed, elapsed time: 0.30s]
+2025-11-18 16:37:06 | INFO | [Function: load_table started...]
+2025-11-18 16:37:06 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:37:06 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:37:06 | INFO | [Function: insert_data started...]
+2025-11-18 16:37:06 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:37:06 | INFO | 插入 1 行新数据
+2025-11-18 16:37:06 | INFO | 更新 2 行数据
+2025-11-18 16:37:06 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:37:06 | INFO | [Function: load_table started...]
+2025-11-18 16:37:06 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:37:06 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:37:06 | INFO | [Function: add_columns started...]
+2025-11-18 16:37:06 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:37:06 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:37:06 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:37:06 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:37:06 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:37:06 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:37:06 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:37:06 | INFO | [Function: load_table started...]
+2025-11-18 16:37:06 | INFO | 成功从表 test_long_table 加载数据，形状: (10, 8)
+2025-11-18 16:37:06 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:37:06 | INFO | [Function: create_table started...]
+2025-11-18 16:37:06 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:37:06 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:37:06 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:37:07 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:37:07 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:37:07 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:37:07 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:37:07 | INFO | [Function: load_table started...]
+2025-11-18 16:37:07 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:37:07 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:37:07 | INFO | 找到 1 个表
+2025-11-18 16:37:07 | INFO | 找到 1 个表
+2025-11-18 16:37:07 | INFO | 数据库连接已关闭
+2025-11-18 16:38:50 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:38:50 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:38:51 | INFO | [Function: create_table started...]
+2025-11-18 16:38:51 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:38:51 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:38:51 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:38:51 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:38:51 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:38:51 | INFO | [Function: create_table completed, elapsed time: 0.10s]
+2025-11-18 16:38:51 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:38:51 | INFO | [Function: insert_data started...]
+2025-11-18 16:38:51 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:38:51 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:38:51 | INFO | [Function: insert_data completed, elapsed time: 0.26s]
+2025-11-18 16:38:51 | INFO | [Function: load_table started...]
+2025-11-18 16:38:51 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:38:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:38:51 | INFO | [Function: insert_data started...]
+2025-11-18 16:38:51 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:38:51 | INFO | 插入 1 行新数据
+2025-11-18 16:38:51 | INFO | 更新 2 行数据
+2025-11-18 16:38:51 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:38:51 | INFO | [Function: load_table started...]
+2025-11-18 16:38:51 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:38:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:38:51 | INFO | [Function: add_columns started...]
+2025-11-18 16:38:51 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:38:51 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:38:51 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:38:51 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:38:51 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:38:51 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:38:51 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:38:51 | INFO | [Function: load_table started...]
+2025-11-18 16:38:51 | INFO | 成功从表 test_long_table 加载数据，形状: (10, 8)
+2025-11-18 16:38:51 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:38:51 | INFO | [Function: create_table started...]
+2025-11-18 16:38:51 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:38:51 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:38:51 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:38:51 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:38:51 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:38:51 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:38:51 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:38:51 | INFO | [Function: load_table started...]
+2025-11-18 16:38:51 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:38:51 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:38:51 | INFO | 找到 1 个表
+2025-11-18 16:38:51 | INFO | 找到 1 个表
+2025-11-18 16:38:51 | INFO | 数据库连接已关闭
+2025-11-18 16:54:12 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:54:12 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:54:12 | INFO | [Function: create_table started...]
+2025-11-18 16:54:12 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:54:12 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:54:12 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:54:12 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:54:12 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:54:12 | INFO | [Function: create_table completed, elapsed time: 0.04s]
+2025-11-18 16:54:12 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:54:12 | INFO | [Function: insert_data started...]
+2025-11-18 16:54:12 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:54:12 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:54:12 | INFO | [Function: insert_data completed, elapsed time: 0.30s]
+2025-11-18 16:54:12 | INFO | [Function: load_table started...]
+2025-11-18 16:54:12 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:54:12 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:54:12 | INFO | [Function: insert_data started...]
+2025-11-18 16:54:12 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:54:12 | INFO | 插入 1 行新数据
+2025-11-18 16:54:12 | INFO | 更新 2 行数据
+2025-11-18 16:54:12 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:54:12 | INFO | [Function: load_table started...]
+2025-11-18 16:54:12 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:54:12 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:54:12 | INFO | [Function: add_columns started...]
+2025-11-18 16:54:12 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:54:12 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:54:12 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:54:12 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:54:12 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:54:12 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:54:12 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:54:12 | INFO | [Function: load_table started...]
+2025-11-18 16:54:12 | INFO | 成功从表 test_long_table 加载数据，形状: (10, 8)
+2025-11-18 16:54:12 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:54:12 | INFO | [Function: create_table started...]
+2025-11-18 16:54:12 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:54:12 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:54:12 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:54:12 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:54:12 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:54:12 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:54:12 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:54:12 | INFO | [Function: load_table started...]
+2025-11-18 16:54:12 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:54:12 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:54:12 | INFO | 找到 1 个表
+2025-11-18 16:54:12 | INFO | 找到 1 个表
+2025-11-18 16:54:12 | INFO | 数据库连接已关闭
+2025-11-18 16:54:54 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:54:54 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:54:54 | INFO | [Function: create_table started...]
+2025-11-18 16:54:54 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:54:54 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:54:54 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:54:54 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:54:54 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:54:54 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:54:54 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:54:54 | INFO | [Function: insert_data started...]
+2025-11-18 16:54:54 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:54:54 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:54:54 | INFO | [Function: insert_data completed, elapsed time: 0.16s]
+2025-11-18 16:54:54 | INFO | [Function: load_table started...]
+2025-11-18 16:54:54 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:54:54 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:54:54 | INFO | [Function: insert_data started...]
+2025-11-18 16:54:54 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:54:54 | INFO | 插入 1 行新数据
+2025-11-18 16:54:54 | INFO | 更新 2 行数据
+2025-11-18 16:54:54 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:54:54 | INFO | [Function: load_table started...]
+2025-11-18 16:54:54 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:54:54 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:54:54 | INFO | [Function: add_columns started...]
+2025-11-18 16:54:54 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:54:54 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:54:54 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:54:54 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:54:54 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:54:54 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:54:54 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:54:54 | INFO | [Function: load_table started...]
+2025-11-18 16:54:54 | INFO | 成功从表 test_long_table 加载数据，形状: (100, 8)
+2025-11-18 16:54:54 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:54:54 | INFO | [Function: create_table started...]
+2025-11-18 16:54:54 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:54:54 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:54:54 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:54:54 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:54:54 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:54:54 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:54:54 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:54:54 | INFO | [Function: load_table started...]
+2025-11-18 16:54:55 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:54:55 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:54:55 | INFO | 找到 1 个表
+2025-11-18 16:54:55 | INFO | 找到 1 个表
+2025-11-18 16:54:55 | INFO | 数据库连接已关闭
+2025-11-18 16:55:24 | INFO | 数据库连接成功: test_data_base
+2025-11-18 16:55:24 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 16:55:24 | INFO | [Function: create_table started...]
+2025-11-18 16:55:24 | INFO | 删除已存在的表 test_long_table
+2025-11-18 16:55:24 | INFO | 创建表 test_long_table，列数: 5
+2025-11-18 16:55:24 | INFO | 已创建复合索引: test_long_table_datetime_company_idx
+2025-11-18 16:55:24 | INFO | 成功插入 414 行数据到表 test_long_table
+2025-11-18 16:55:24 | INFO | 成功创建表 test_long_table，插入 414 行数据
+2025-11-18 16:55:24 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:55:24 | INFO | 表 test_long_table 信息: 6 列, 414 行, 120 kB
+2025-11-18 16:55:24 | INFO | [Function: insert_data started...]
+2025-11-18 16:55:24 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:55:24 | INFO | skip 模式：插入 1 行新数据，跳过 4 行重复数据
+2025-11-18 16:55:24 | INFO | [Function: insert_data completed, elapsed time: 0.17s]
+2025-11-18 16:55:24 | INFO | [Function: load_table started...]
+2025-11-18 16:55:24 | INFO | 成功从表 test_long_table 加载数据，形状: (415, 6)
+2025-11-18 16:55:24 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:55:24 | INFO | [Function: insert_data started...]
+2025-11-18 16:55:24 | INFO | 成功插入 1 行数据到表 test_long_table
+2025-11-18 16:55:24 | INFO | 插入 1 行新数据
+2025-11-18 16:55:24 | INFO | 更新 2 行数据
+2025-11-18 16:55:24 | INFO | [Function: insert_data completed, elapsed time: 0.01s]
+2025-11-18 16:55:24 | INFO | [Function: load_table started...]
+2025-11-18 16:55:24 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 6)
+2025-11-18 16:55:24 | INFO | [Function: load_table completed, elapsed time: 0.00s]
+2025-11-18 16:55:24 | INFO | [Function: add_columns started...]
+2025-11-18 16:55:24 | INFO | 准备添加 2 个新列: ['factor_D', 'factor_E']
+2025-11-18 16:55:24 | INFO | 添加列: factor_D (DOUBLE PRECISION)
+2025-11-18 16:55:24 | INFO | 添加列: factor_E (BIGINT)
+2025-11-18 16:55:24 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 16:55:24 | INFO | 成功更新 4 行的新列数据
+2025-11-18 16:55:24 | INFO | [Function: add_columns completed, elapsed time: 0.01s]
+2025-11-18 16:55:24 | INFO | 表 test_long_table 信息: 8 列, 416 行, 120 kB
+2025-11-18 16:55:24 | INFO | [Function: load_table started...]
+2025-11-18 16:55:24 | INFO | 成功从表 test_long_table 加载数据，形状: (416, 8)
+2025-11-18 16:55:24 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:55:24 | INFO | [Function: create_table started...]
+2025-11-18 16:55:24 | INFO | 删除已存在的表 tech_indicators
+2025-11-18 16:55:24 | INFO | 创建表 tech_indicators，列数: 9
+2025-11-18 16:55:24 | INFO | 已创建复合索引: tech_indicators_datetime_company_idx
+2025-11-18 16:55:24 | INFO | 成功插入 1000 行数据到表 tech_indicators
+2025-11-18 16:55:24 | INFO | 成功创建表 tech_indicators，插入 1000 行数据
+2025-11-18 16:55:24 | INFO | [Function: create_table completed, elapsed time: 0.07s]
+2025-11-18 16:55:24 | INFO | 表 tech_indicators 信息: 10 列, 1000 行, 224 kB
+2025-11-18 16:55:24 | INFO | [Function: load_table started...]
+2025-11-18 16:55:24 | INFO | 成功从表 tech_indicators 加载数据，形状: (1000, 10)
+2025-11-18 16:55:24 | INFO | [Function: load_table completed, elapsed time: 0.01s]
+2025-11-18 16:55:24 | INFO | 找到 1 个表
+2025-11-18 16:55:24 | INFO | 找到 1 个表
+2025-11-18 16:55:24 | INFO | 数据库连接已关闭
+2025-11-18 17:08:11 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:08:11 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:08:11 | INFO | [Function: create_table started...]
+2025-11-18 17:08:11 | WARNING | 时间列 datetime 不是 datetime 类型，正在转换...
+2025-11-18 17:08:11 | INFO | 创建表 long_factors，列数: 20
+2025-11-18 17:08:11 | INFO | 已创建复合索引: long_factors_datetime_company_idx
+2025-11-18 17:08:16 | INFO | 成功插入 51000 行数据到表 long_factors
+2025-11-18 17:08:17 | INFO | 成功创建表 long_factors，插入 51000 行数据
+2025-11-18 17:08:17 | INFO | [Function: create_table completed, elapsed time: 5.29s]
+2025-11-18 17:08:17 | INFO | [Function: load_table started...]
+2025-11-18 17:08:18 | INFO | 成功从表 long_factors 加载数据，形状: (51000, 21)
+2025-11-18 17:08:18 | INFO | [Function: load_table completed, elapsed time: 1.12s]
+2025-11-18 17:08:18 | INFO | 数据库连接已关闭
+2025-11-18 17:08:46 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:08:46 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:08:46 | INFO | [Function: create_table started...]
+2025-11-18 17:08:46 | WARNING | 时间列 datetime 不是 datetime 类型，正在转换...
+2025-11-18 17:08:46 | INFO | 删除已存在的表 long_factors
+2025-11-18 17:08:46 | INFO | 创建表 long_factors，列数: 20
+2025-11-18 17:08:46 | INFO | 已创建复合索引: long_factors_datetime_company_idx
+2025-11-18 17:08:51 | INFO | 成功插入 51000 行数据到表 long_factors
+2025-11-18 17:08:51 | INFO | 成功创建表 long_factors，插入 51000 行数据
+2025-11-18 17:08:51 | INFO | [Function: create_table completed, elapsed time: 5.05s]
+2025-11-18 17:08:51 | INFO | [Function: insert_data started...]
+2025-11-18 17:08:52 | INFO | 成功插入 973 行数据到表 long_factors
+2025-11-18 17:08:52 | INFO | skip 模式：插入 973 行新数据，跳过 0 行重复数据
+2025-11-18 17:08:52 | INFO | [Function: insert_data completed, elapsed time: 0.35s]
+2025-11-18 17:08:52 | INFO | [Function: load_table started...]
+2025-11-18 17:08:53 | INFO | 成功从表 long_factors 加载数据，形状: (51973, 21)
+2025-11-18 17:08:53 | INFO | [Function: load_table completed, elapsed time: 1.21s]
+2025-11-18 17:08:53 | INFO | 数据库连接已关闭
+2025-11-18 17:09:30 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:09:30 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:09:30 | INFO | [Function: add_columns started...]
+2025-11-18 17:09:30 | ERROR | DataFrame 缺少时间列: datetime
+2025-11-18 17:09:30 | INFO | [Function: add_columns completed, elapsed time: 0.00s]
+2025-11-18 17:09:30 | INFO | [Function: load_table started...]
+2025-11-18 17:09:32 | INFO | 成功从表 long_factors 加载数据，形状: (51973, 21)
+2025-11-18 17:09:32 | INFO | [Function: load_table completed, elapsed time: 1.23s]
+2025-11-18 17:09:32 | INFO | 数据库连接已关闭
+2025-11-18 17:11:17 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:11:17 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:11:17 | INFO | [Function: create_table started...]
+2025-11-18 17:11:17 | INFO | 删除已存在的表 long_factors
+2025-11-18 17:11:17 | INFO | 创建表 long_factors，列数: 20
+2025-11-18 17:11:17 | INFO | 已创建复合索引: long_factors_datetime_company_idx
+2025-11-18 17:11:22 | INFO | 成功插入 51000 行数据到表 long_factors
+2025-11-18 17:11:22 | INFO | 成功创建表 long_factors，插入 51000 行数据
+2025-11-18 17:11:22 | INFO | [Function: create_table completed, elapsed time: 5.09s]
+2025-11-18 17:11:22 | INFO | [Function: insert_data started...]
+2025-11-18 17:11:22 | INFO | 成功插入 973 行数据到表 long_factors
+2025-11-18 17:11:22 | INFO | skip 模式：插入 973 行新数据，跳过 0 行重复数据
+2025-11-18 17:11:22 | INFO | [Function: insert_data completed, elapsed time: 0.22s]
+2025-11-18 17:11:22 | INFO | [Function: add_columns started...]
+2025-11-18 17:11:22 | INFO | 准备添加 3 个新列: ['pcf_ratio', 'earnings_growth', 'asset_growth']
+2025-11-18 17:11:22 | INFO | 添加列: pcf_ratio (DOUBLE PRECISION)
+2025-11-18 17:11:22 | INFO | 添加列: earnings_growth (DOUBLE PRECISION)
+2025-11-18 17:11:22 | INFO | 添加列: asset_growth (DOUBLE PRECISION)
+2025-11-18 17:11:22 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 17:11:35 | INFO | 成功更新 51000 行的新列数据
+2025-11-18 17:11:35 | INFO | [Function: add_columns completed, elapsed time: 12.99s]
+2025-11-18 17:11:35 | INFO | [Function: load_table started...]
+2025-11-18 17:11:36 | INFO | 成功从表 long_factors 加载数据，形状: (51973, 24)
+2025-11-18 17:11:36 | INFO | [Function: load_table completed, elapsed time: 1.32s]
+2025-11-18 17:11:36 | INFO | 数据库连接已关闭
+2025-11-18 17:12:41 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:12:41 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:12:41 | INFO | [Function: insert_data started...]
+2025-11-18 17:12:41 | ERROR | DataFrame 缺少时间列: datetime
+2025-11-18 17:12:41 | INFO | [Function: insert_data completed, elapsed time: 0.00s]
+2025-11-18 17:12:41 | INFO | [Function: load_table started...]
+2025-11-18 17:12:42 | INFO | 成功从表 long_factors 加载数据，形状: (51973, 24)
+2025-11-18 17:12:42 | INFO | [Function: load_table completed, elapsed time: 1.38s]
+2025-11-18 17:12:42 | INFO | 数据库连接已关闭
+2025-11-18 17:13:40 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:13:40 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:13:40 | INFO | [Function: create_table started...]
+2025-11-18 17:13:41 | INFO | 删除已存在的表 long_factors
+2025-11-18 17:13:41 | INFO | 创建表 long_factors，列数: 20
+2025-11-18 17:13:41 | INFO | 已创建复合索引: long_factors_datetime_company_idx
+2025-11-18 17:13:46 | INFO | 成功插入 51000 行数据到表 long_factors
+2025-11-18 17:13:46 | INFO | 成功创建表 long_factors，插入 51000 行数据
+2025-11-18 17:13:46 | INFO | [Function: create_table completed, elapsed time: 5.28s]
+2025-11-18 17:13:46 | INFO | [Function: insert_data started...]
+2025-11-18 17:13:46 | INFO | 成功插入 973 行数据到表 long_factors
+2025-11-18 17:13:46 | INFO | skip 模式：插入 973 行新数据，跳过 0 行重复数据
+2025-11-18 17:13:46 | INFO | [Function: insert_data completed, elapsed time: 0.24s]
+2025-11-18 17:13:46 | INFO | [Function: add_columns started...]
+2025-11-18 17:13:46 | INFO | 准备添加 3 个新列: ['pcf_ratio', 'earnings_growth', 'asset_growth']
+2025-11-18 17:13:46 | INFO | 添加列: pcf_ratio (DOUBLE PRECISION)
+2025-11-18 17:13:46 | INFO | 添加列: earnings_growth (DOUBLE PRECISION)
+2025-11-18 17:13:46 | INFO | 添加列: asset_growth (DOUBLE PRECISION)
+2025-11-18 17:13:46 | INFO | 开始基于（时间，公司）键合并数据...
+2025-11-18 17:14:00 | INFO | 成功更新 51000 行的新列数据
+2025-11-18 17:14:00 | INFO | [Function: add_columns completed, elapsed time: 13.54s]
+2025-11-18 17:14:00 | INFO | [Function: load_table started...]
+2025-11-18 17:14:01 | INFO | 成功从表 long_factors 加载数据，形状: (51973, 24)
+2025-11-18 17:14:01 | INFO | [Function: load_table completed, elapsed time: 1.36s]
+2025-11-18 17:14:01 | INFO | 数据库连接已关闭
+2025-11-18 17:14:15 | INFO | 数据库连接成功: macro_data_base
+2025-11-18 17:14:15 | INFO | LongManager 初始化完成，复合键：(datetime, company)
+2025-11-18 17:14:15 | INFO | [Function: insert_data started...]
+2025-11-18 17:14:15 | INFO | 更新 973 行数据
+2025-11-18 17:14:15 | INFO | [Function: insert_data completed, elapsed time: 0.60s]
+2025-11-18 17:14:15 | INFO | [Function: load_table started...]
+2025-11-18 17:14:17 | INFO | 成功从表 long_factors 加载数据，形状: (51973, 24)
+2025-11-18 17:14:17 | INFO | [Function: load_table completed, elapsed time: 1.48s]
+2025-11-18 17:14:17 | INFO | 数据库连接已关闭

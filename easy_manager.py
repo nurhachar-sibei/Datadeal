@@ -143,6 +143,20 @@ class EasyManager:
             else:
                 return "TEXT"
     
+    def _clean_column_name(self, column_name: str) -> str:
+        """
+        清理列名，确保符合SQL标准
+        
+        Args:
+            column_name: 原始列名
+            
+        Returns:
+            清理后的列名
+        """
+        # 替换特殊字符为下划线
+        clean_name = column_name.replace('.', '_').replace('-', '_').replace(' ', '_')
+        return clean_name
+    
     @function_timer
     def create_table(self, table_name: str, dataframe: pd.DataFrame, 
                      overwrite: bool = False) -> bool:
@@ -193,7 +207,7 @@ class EasyManager:
             for col in df.columns:
                 col_type = self._infer_column_type(df[col])
                 # 清理列名，确保符合SQL标准
-                clean_col = col.replace('.', '_').replace('-', '_').replace(' ', '_')
+                clean_col = self._clean_column_name(col)
                 columns_sql.append(f'"{clean_col}" {col_type}')
             
             create_sql = f"""
@@ -233,8 +247,7 @@ class EasyManager:
         
         # 清理列名
         df_clean = df.copy()
-        df_clean.columns = [col.replace('.', '_').replace('-', '_').replace(' ', '_') 
-                           for col in df.columns]
+        df_clean.columns = [self._clean_column_name(col) for col in df.columns]
         
         # 准备数据
         columns = ', '.join([f'"{col}"' for col in df_clean.columns])
@@ -376,7 +389,6 @@ class EasyManager:
                         # 准备参数
                         values = [None if pd.isna(row[col]) else row[col] for col in new_columns]
                         values.append(index_value)
-                        
                         self.cursor.execute(update_sql, values)
                         if self.cursor.rowcount > 0:
                             update_count += 1
@@ -391,6 +403,7 @@ class EasyManager:
             import traceback
             self.logger.error(f"添加列到表 {table_name} 失败: {str(e)}")
             self.logger.error(f"详细错误信息: {traceback.format_exc()}")
+            self.logger.error("请优先检查数据格式问题,注:所有的时间格式都需要pd.to_datatime后方可录入")
             return False
     
     @function_timer
@@ -655,73 +668,253 @@ class EasyManager:
             self.logger.error(f"详细错误信息: {traceback.format_exc()}")
             return None
     
-    def list_tables(self, schema: str = 'public') -> List[str]:
+    def list_tables(self, schema: str = 'public', verbose: bool = False, 
+                    pattern: str = None, print_table: bool = False) -> List[Dict[str, Any]]:
         """
         列出数据库中所有表
         
         Args:
             schema: 模式名（默认为public）
+            verbose: 是否显示详细信息（行数、大小等）
+            pattern: 表名过滤模式（支持SQL LIKE语法，如 'stock%'）
+            print_table: 是否以美观的表格形式打印
             
         Returns:
-            表名列表
+            表信息列表，包含表名、行数、大小等信息
         """
         self._ensure_connection()
         
         try:
-            self.cursor.execute("""
-                SELECT table_name 
-                FROM information_schema.tables 
-                WHERE table_schema = %s
-                ORDER BY table_name
-            """, (schema,))
-            
-            tables = [row['table_name'] for row in self.cursor.fetchall()]
-            self.logger.info(f"找到 {len(tables)} 个表")
-            return tables
+            if verbose:
+                # 获取详细信息
+                query = """
+                    SELECT 
+                        t.table_name,
+                        pg_size_pretty(pg_total_relation_size(quote_ident(t.table_name)::regclass)) as size,
+                        (SELECT COUNT(*) FROM information_schema.columns 
+                         WHERE table_name = t.table_name AND table_schema = t.table_schema) as column_count
+                    FROM information_schema.tables t
+                    WHERE t.table_schema = %s
+                """
+                
+                params = [schema]
+                if pattern:
+                    query += " AND t.table_name LIKE %s"
+                    params.append(pattern)
+                
+                query += " ORDER BY t.table_name"
+                
+                self.cursor.execute(query, params)
+                tables = []
+                
+                for row in self.cursor.fetchall():
+                    table_name = row['table_name']
+                    # 获取行数
+                    self.cursor.execute(f'SELECT COUNT(*) as row_count FROM "{table_name}"')
+                    row_count = self.cursor.fetchone()['row_count']
+                    
+                    tables.append({
+                        'table_name': table_name,
+                        'row_count': row_count,
+                        'column_count': row['column_count'],
+                        'size': row['size']
+                    })
+                
+                if print_table:
+                    self._print_tables_info(tables)
+                
+                self.logger.info(f"找到 {len(tables)} 个表")
+                return tables
+            else:
+                # 简单模式：只返回表名
+                query = """
+                    SELECT table_name 
+                    FROM information_schema.tables 
+                    WHERE table_schema = %s
+                """
+                
+                params = [schema]
+                if pattern:
+                    query += " AND table_name LIKE %s"
+                    params.append(pattern)
+                
+                query += " ORDER BY table_name"
+                
+                self.cursor.execute(query, params)
+                tables = [{'table_name': row['table_name']} for row in self.cursor.fetchall()]
+                
+                if print_table:
+                    print(f"\n[数据库表列表] (共 {len(tables)} 个):")
+                    print("-" * 40)
+                    for i, table in enumerate(tables, 1):
+                        print(f"  {i}. {table['table_name']}")
+                    print("-" * 40)
+                
+                self.logger.info(f"找到 {len(tables)} 个表")
+                return tables
             
         except Exception as e:
             self.logger.error(f"获取表列表失败: {str(e)}")
             return []
     
-    def get_table_info(self, table_name: str) -> Dict[str, Any]:
+    def _print_tables_info(self, tables: List[Dict[str, Any]]):
+        """打印表信息的美观格式"""
+        if not tables:
+            print("\n[表列表] 没有找到任何表")
+            return
+        
+        print(f"\n{'='*80}")
+        print(f"[数据库表列表] (共 {len(tables)} 个表)")
+        print(f"{'='*80}")
+        print(f"{'序号':<6} {'表名':<30} {'行数':<12} {'列数':<8} {'大小':<10}")
+        print("-" * 80)
+        
+        for i, table in enumerate(tables, 1):
+            print(f"{i:<6} {table['table_name']:<30} {table['row_count']:>10,}  "
+                  f"{table['column_count']:>6}  {table['size']:>10}")
+        
+        print("=" * 80)
+        
+        # 统计信息
+        total_rows = sum(t['row_count'] for t in tables)
+        print(f"[统计] 总行数: {total_rows:,}")
+        print("=" * 80 + "\n")
+    
+    def get_table_info(self, table_name: str, print_info: bool = False) -> Dict[str, Any]:
         """
-        获取表信息
+        获取表的详细信息
         
         Args:
             table_name: 表名
+            print_info: 是否以美观格式打印信息
             
         Returns:
-            表信息字典
+            表信息字典，包含列信息、索引、约束、大小等
         """
         self._ensure_connection()
         
         try:
-            # 获取列信息
+            table_name_only = table_name.split(".")[-1]
+            
+            # 1. 获取列信息（包含默认值和约束）
             self.cursor.execute("""
-                SELECT column_name, data_type, is_nullable
+                SELECT 
+                    column_name, 
+                    data_type, 
+                    is_nullable,
+                    column_default,
+                    character_maximum_length
                 FROM information_schema.columns 
                 WHERE table_name = %s
                 ORDER BY ordinal_position
-            """, (table_name.split(".")[-1],))
+            """, (table_name_only,))
             
             columns = self.cursor.fetchall()
             
-            # 获取行数
-            self.cursor.execute(f"SELECT COUNT(*) as row_count FROM {table_name}")
+            # 2. 获取行数
+            self.cursor.execute(f'SELECT COUNT(*) as row_count FROM "{table_name_only}"')
             row_count = self.cursor.fetchone()['row_count']
             
+            # 3. 获取表大小
+            self.cursor.execute("""
+                SELECT pg_size_pretty(pg_total_relation_size(%s::regclass)) as size
+            """, (table_name_only,))
+            size = self.cursor.fetchone()['size']
+            
+            # 4. 获取索引信息
+            self.cursor.execute("""
+                SELECT
+                    indexname as index_name,
+                    indexdef as index_definition
+                FROM pg_indexes
+                WHERE tablename = %s
+            """, (table_name_only,))
+            
+            indexes = self.cursor.fetchall()
+            
+            # 5. 获取主键信息
+            self.cursor.execute("""
+                SELECT a.attname as column_name
+                FROM pg_index i
+                JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)
+                WHERE i.indrelid = %s::regclass AND i.indisprimary
+            """, (table_name_only,))
+            
+            primary_keys = [row['column_name'] for row in self.cursor.fetchall()]
+            
+            # 6. 组装信息
             info = {
                 'table_name': table_name,
+                'row_count': row_count,
+                'column_count': len(columns),
+                'size': size,
                 'columns': columns,
-                'row_count': row_count
+                'indexes': indexes,
+                'primary_keys': primary_keys
             }
             
-            self.logger.info(f"表 {table_name} 信息: {len(columns)} 列, {row_count} 行")
+            if print_info:
+                self._print_table_info(info)
+            
+            self.logger.info(f"表 {table_name} 信息: {len(columns)} 列, {row_count} 行, {size}")
             return info
             
         except Exception as e:
+            import traceback
             self.logger.error(f"获取表信息失败: {str(e)}")
+            self.logger.error(f"详细错误: {traceback.format_exc()}")
             return {}
+    
+    def _print_table_info(self, info: Dict[str, Any]):
+        """以美观格式打印表信息"""
+        print(f"\n{'='*80}")
+        print(f"[表信息] {info['table_name']}")
+        print(f"{'='*80}")
+        
+        # 基本信息
+        print(f"\n[基本统计]")
+        print(f"  - 总行数: {info['row_count']:,}")
+        print(f"  - 总列数: {info['column_count']}")
+        print(f"  - 表大小: {info['size']}")
+        
+        # 主键信息
+        if info['primary_keys']:
+            print(f"\n[主键]")
+            for pk in info['primary_keys']:
+                print(f"  - {pk}")
+        
+        # 列信息
+        print(f"\n[列详情]")
+        print(f"{'序号':<6} {'列名':<25} {'类型':<20} {'可空':<8} {'默认值':<15}")
+        print("-" * 80)
+        
+        for i, col in enumerate(info['columns'], 1):
+            col_name = col['column_name']
+            data_type = col['data_type']
+            if col.get('character_maximum_length'):
+                data_type += f"({col['character_maximum_length']})"
+            
+            nullable = "Y" if col['is_nullable'] == 'YES' else "N"
+            default = str(col['column_default'])[:15] if col['column_default'] else "-"
+            
+            # 标记主键
+            if col_name in info['primary_keys']:
+                col_name += " [PK]"
+            
+            print(f"{i:<6} {col_name:<25} {data_type:<20} {nullable:<8} {default:<15}")
+        
+        # 索引信息
+        if info['indexes']:
+            print(f"\n[索引] (共 {len(info['indexes'])} 个)")
+            for i, idx in enumerate(info['indexes'], 1):
+                print(f"  {i}. {idx['index_name']}")
+                # 简化索引定义显示
+                idx_def = idx['index_definition']
+                if len(idx_def) > 70:
+                    idx_def = idx_def[:70] + "..."
+                print(f"     {idx_def}")
+        
+        print("=" * 80 + "\n")
     
     @staticmethod
     def help():
@@ -730,7 +923,7 @@ class EasyManager:
         """
         help_text = """
 ╔════════════════════════════════════════════════════════════════════════════╗
-║                      EasyManager 使用帮助 (v2.1)                           ║
+║                      EasyManager 使用帮助 (v2.2)                           ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 
 📚 核心功能：
@@ -739,11 +932,11 @@ class EasyManager:
      └─ 创建表并导入数据
      └─ 示例: em.create_table('my_table', df, overwrite=True)
 
-  2. add_columns(table_name, dataframe, merge_on_index=True)  ⭐ 新功能
+  2. add_columns(table_name, dataframe, merge_on_index=True)  
      └─ 在已存在的表中添加新列（自动屏蔽已存在的列）
      └─ 示例: em.add_columns('my_table', df_new_cols)
 
-  3. insert_data(table_name, dataframe, mode='skip')  ⭐ 升级版
+  3. insert_data(table_name, dataframe, mode='skip')  
      └─ 插入数据，支持三种模式：
         • skip   - 忽略重复索引（默认）
         • update - 覆盖重复索引的数据
@@ -758,13 +951,13 @@ class EasyManager:
      └─ 删除表
      └─ 示例: em.drop_table('my_table')
 
-  6. list_tables(schema='public')
-     └─ 列出所有表
-     └─ 示例: tables = em.list_tables()
+  6. list_tables(schema='public', verbose=False, pattern=None)  ⭐ 升级版
+     └─ 列出所有表（支持详细模式和过滤）
+     └─ 示例: em.list_tables(pattern='stock%', verbose=True, print_table=True)
 
-  7. get_table_info(table_name)
-     └─ 获取表详细信息（列、行数等）
-     └─ 示例: info = em.get_table_info('my_table')
+  7. get_table_info(table_name, print_info=False)  ⭐ 升级版
+     └─ 获取表详细信息（列、行数、大小、主键、索引）
+     └─ 示例: em.get_table_info('my_table', print_info=True)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -844,6 +1037,517 @@ class EasyManager:
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
+
+
+class LongManager(EasyManager):
+    """
+    长格式数据管理器（Panel Data Manager）
+    
+    专门用于处理长格式面板数据，特点：
+    1. 数据格式：每行是一个公司在某时间点的观测
+    2. 复合键：使用（时间，公司）作为唯一标识
+    3. 列顺序：时间列在第一列，公司列在第二列
+    4. 索引：使用自增序列，而不是时间索引
+    
+    适用场景：
+    - 多公司多时间点的因子数据
+    - Panel Data 分析
+    - 时间序列横截面数据
+    """
+    
+    def __init__(self, 
+                 database: str = 'test_data_base',
+                 user: str = 'postgres',
+                 password: str = 'cbw88982449',
+                 host: str = 'localhost',
+                 port: int = 5432,
+                 time_col: str = 'datetime',
+                 entity_col: str = 'company'):
+        """
+        初始化长格式数据管理器
+        
+        Args:
+            database: 数据库名
+            user: 用户名
+            password: 密码
+            host: 主机地址
+            port: 端口
+            time_col: 时间列名（默认：'datetime'）
+            entity_col: 实体列名（默认：'company'）
+        """
+        super().__init__(database, user, password, host, port)
+        self.time_col = time_col
+        self.entity_col = entity_col
+        self.logger.info(f"LongManager 初始化完成，复合键：({time_col}, {entity_col})")
+    
+    @function_timer
+    def create_table(self, table_name: str, dataframe: pd.DataFrame, 
+                     overwrite: bool = False) -> bool:
+        """
+        创建长格式数据表
+        
+        特点：
+        1. 确保时间列在第一列，公司列在第二列
+        2. 不使用这两列作为索引，使用自增序列
+        3. 自动检查和调整列顺序
+        
+        Args:
+            table_name: 表名
+            dataframe: DataFrame（必须包含时间列和实体列）
+            overwrite: 是否覆盖已存在的表
+            
+        Returns:
+            bool: 是否成功
+        """
+        self._ensure_connection()
+        
+        try:
+            # 检查必需的列
+            if self.time_col not in dataframe.columns:
+                self.logger.error(f"DataFrame 缺少时间列: {self.time_col}")
+                return False
+            
+            if self.entity_col not in dataframe.columns:
+                self.logger.error(f"DataFrame 缺少实体列: {self.entity_col}")
+                return False
+            
+            # 重置索引（如果有）
+            df = dataframe.copy()
+            if df.index.name is not None or not isinstance(df.index, pd.RangeIndex):
+                df = df.reset_index(drop=True)
+            
+            # 调整列顺序：时间列第一，公司列第二，其他列保持顺序
+            other_cols = [col for col in df.columns 
+                         if col not in [self.time_col, self.entity_col]]
+            df = df[[self.time_col, self.entity_col] + other_cols]
+            
+            # 确保时间列是 datetime 类型
+            if not pd.api.types.is_datetime64_any_dtype(df[self.time_col]):
+                self.logger.warning(f"时间列 {self.time_col} 不是 datetime 类型，正在转换...")
+                df[self.time_col] = pd.to_datetime(df[self.time_col])
+            
+            # 检查是否有重复的（时间，公司）组合
+            duplicates = df.duplicated(subset=[self.time_col, self.entity_col], keep=False)
+            if duplicates.any():
+                dup_count = duplicates.sum()
+                self.logger.warning(f"发现 {dup_count} 个重复的 ({self.time_col}, {self.entity_col}) 组合")
+                self.logger.warning("将保留第一次出现的记录")
+                df = df.drop_duplicates(subset=[self.time_col, self.entity_col], keep='first')
+            
+            # 检查表是否存在
+            self.cursor.execute("""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_name = %s
+                );
+            """, (table_name.split('.')[-1],))
+            
+            table_exists = self.cursor.fetchone()['exists']
+            
+            if table_exists and not overwrite:
+                self.logger.warning(f"表 {table_name} 已存在，使用 overwrite=True 来覆盖")
+                return False
+            
+            if table_exists and overwrite:
+                self.logger.info(f"删除已存在的表 {table_name}")
+                self.cursor.execute(f'DROP TABLE IF EXISTS "{table_name}" CASCADE')
+                self.conn.commit()
+            
+            # 清理列名
+            df.columns = [self._clean_column_name(col) for col in df.columns]
+            
+            # 创建表结构（添加自增主键）
+            columns_def = ['id SERIAL PRIMARY KEY']
+            
+            for column in df.columns:
+                col_type = self._infer_column_type(df[column])
+                nullable = "NULL" if df[column].isnull().any() else "NOT NULL"
+                columns_def.append(f'"{column}" {col_type} {nullable}')
+            
+            create_table_sql = f'CREATE TABLE "{table_name}" ({", ".join(columns_def)})'
+            
+            self.logger.info(f"创建表 {table_name}，列数: {len(df.columns)}")
+            self.cursor.execute(create_table_sql)
+            self.conn.commit()
+            
+            # 在（时间，公司）列上创建复合索引，提高查询性能
+            index_name = f"{table_name}_{self.time_col}_{self.entity_col}_idx"
+            create_index_sql = f'''
+                CREATE INDEX "{index_name}" 
+                ON "{table_name}" ("{self.time_col}", "{self.entity_col}")
+            '''
+            self.cursor.execute(create_index_sql)
+            self.conn.commit()
+            self.logger.info(f"已创建复合索引: {index_name}")
+            
+            # 插入数据
+            self._insert_dataframe(table_name, df)
+            
+            self.logger.info(f"成功创建表 {table_name}，插入 {len(df)} 行数据")
+            return True
+            
+        except Exception as e:
+            self.conn.rollback()
+            import traceback
+            self.logger.error(f"创建表 {table_name} 失败: {str(e)}")
+            self.logger.error(f"详细错误信息: {traceback.format_exc()}")
+            return False
+    
+    @function_timer
+    def insert_data(self, table_name: str, dataframe: pd.DataFrame, 
+                    mode: str = 'skip') -> bool:
+        """
+        插入长格式数据
+        
+        基于（时间，公司）复合键判断重复：
+        - skip: 忽略重复的（时间，公司）组合
+        - update: 更新重复的（时间，公司）组合
+        - append: 直接追加，不检查重复
+        
+        Args:
+            table_name: 表名
+            dataframe: DataFrame
+            mode: 'skip', 'update', 'append'
+            
+        Returns:
+            bool: 是否成功
+        """
+        self._ensure_connection()
+        
+        if mode not in ['skip', 'update', 'append']:
+            self.logger.error(f"不支持的模式: {mode}")
+            return False
+        
+        try:
+            # 检查必需的列
+            if self.time_col not in dataframe.columns:
+                self.logger.error(f"DataFrame 缺少时间列: {self.time_col}")
+                return False
+            
+            if self.entity_col not in dataframe.columns:
+                self.logger.error(f"DataFrame 缺少实体列: {self.entity_col}")
+                return False
+            
+            # 准备数据
+            df = dataframe.copy()
+            if df.index.name is not None or not isinstance(df.index, pd.RangeIndex):
+                df = df.reset_index(drop=True)
+            
+            # 确保列顺序
+            other_cols = [col for col in df.columns 
+                         if col not in [self.time_col, self.entity_col]]
+            df = df[[self.time_col, self.entity_col] + other_cols]
+            
+            # 确保时间列是 datetime 类型
+            if not pd.api.types.is_datetime64_any_dtype(df[self.time_col]):
+                df[self.time_col] = pd.to_datetime(df[self.time_col])
+            
+            # 清理列名
+            df.columns = [self._clean_column_name(col) for col in df.columns]
+            
+            # append 模式：直接插入
+            if mode == 'append':
+                self._insert_dataframe(table_name, df)
+                self.logger.info(f"append 模式：插入 {len(df)} 行数据")
+                return True
+            
+            # skip 和 update 模式：需要检查重复
+            # 加载现有数据的（时间，公司）组合
+            query = f'''
+                SELECT "{self.time_col}", "{self.entity_col}"
+                FROM "{table_name}"
+            '''
+            existing_df = pd.read_sql(query, self.conn)
+            existing_df[self.time_col] = pd.to_datetime(existing_df[self.time_col])
+            
+            # 创建复合键
+            existing_keys = set(
+                zip(existing_df[self.time_col], existing_df[self.entity_col])
+            )
+            df_keys = list(zip(df[self.time_col], df[self.entity_col]))
+            
+            if mode == 'skip':
+                # skip 模式：只插入新的（时间，公司）组合
+                mask = [key not in existing_keys for key in df_keys]
+                df_to_insert = df[mask].copy()
+                
+                if len(df_to_insert) == 0:
+                    self.logger.info("skip 模式：所有数据都已存在，无需插入")
+                    return True
+                
+                self._insert_dataframe(table_name, df_to_insert)
+                skipped = len(df) - len(df_to_insert)
+                self.logger.info(
+                    f"skip 模式：插入 {len(df_to_insert)} 行新数据，"
+                    f"跳过 {skipped} 行重复数据"
+                )
+                return True
+            
+            elif mode == 'update':
+                # update 模式：更新已存在的，插入新的
+                mask_update = [key in existing_keys for key in df_keys]
+                mask_insert = [key not in existing_keys for key in df_keys]
+                
+                df_to_update = df[mask_update].copy()
+                df_to_insert = df[mask_insert].copy()
+                
+                # 插入新数据
+                if len(df_to_insert) > 0:
+                    self._insert_dataframe(table_name, df_to_insert)
+                    self.logger.info(f"插入 {len(df_to_insert)} 行新数据")
+                
+                # 更新已存在的数据
+                if len(df_to_update) > 0:
+                    update_count = 0
+                    columns = [col for col in df_to_update.columns 
+                              if col not in [self.time_col, self.entity_col]]
+                    
+                    for _, row in df_to_update.iterrows():
+                        set_clause = ', '.join([f'"{col}" = %s' for col in columns])
+                        update_sql = f'''
+                            UPDATE "{table_name}"
+                            SET {set_clause}
+                            WHERE "{self.time_col}" = %s AND "{self.entity_col}" = %s
+                        '''
+                        
+                        values = [None if pd.isna(row[col]) else row[col] 
+                                 for col in columns]
+                        values.extend([row[self.time_col], row[self.entity_col]])
+                        
+                        self.cursor.execute(update_sql, values)
+                        if self.cursor.rowcount > 0:
+                            update_count += 1
+                    
+                    self.conn.commit()
+                    self.logger.info(f"更新 {update_count} 行数据")
+                
+                return True
+            
+        except Exception as e:
+            self.conn.rollback()
+            import traceback
+            self.logger.error(f"插入数据到表 {table_name} 失败: {str(e)}")
+            self.logger.error(f"详细错误信息: {traceback.format_exc()}")
+            self.logger.error("请优先检查数据格式问题,注:所有的时间格式都需要pd.to_datetime后方可录入")
+            return False
+    
+    @function_timer
+    def add_columns(self, table_name: str, dataframe: pd.DataFrame, 
+                    merge_on_keys: bool = True) -> bool:
+        """
+        向长格式表添加新列
+        
+        基于（时间，公司）复合键合并数据
+        
+        Args:
+            table_name: 表名
+            dataframe: 包含新列的 DataFrame
+            merge_on_keys: 是否基于（时间，公司）合并数据
+            
+        Returns:
+            bool: 是否成功
+        """
+        self._ensure_connection()
+        
+        try:
+            # 检查必需的列
+            if self.time_col not in dataframe.columns:
+                self.logger.error(f"DataFrame 缺少时间列: {self.time_col}")
+                return False
+            
+            if self.entity_col not in dataframe.columns:
+                self.logger.error(f"DataFrame 缺少实体列: {self.entity_col}")
+                return False
+            
+            # 准备数据
+            df = dataframe.copy()
+            if df.index.name is not None or not isinstance(df.index, pd.RangeIndex):
+                df = df.reset_index(drop=True)
+            
+            # 确保时间列是 datetime 类型
+            if not pd.api.types.is_datetime64_any_dtype(df[self.time_col]):
+                df[self.time_col] = pd.to_datetime(df[self.time_col])
+            
+            # 清理列名
+            df.columns = [self._clean_column_name(col) for col in df.columns]
+            
+            # 获取现有列
+            existing_columns = self._get_table_columns(table_name)
+            
+            # 识别新列（排除时间列和实体列）
+            new_columns = [col for col in df.columns 
+                          if col not in existing_columns 
+                          and col not in [self.time_col, self.entity_col]]
+            
+            if not new_columns:
+                self.logger.info("没有需要添加的新列")
+                return True
+            
+            self.logger.info(f"准备添加 {len(new_columns)} 个新列: {new_columns}")
+            
+            # 添加新列到表结构
+            for column in new_columns:
+                col_type = self._infer_column_type(df[column])
+                alter_sql = f'ALTER TABLE "{table_name}" ADD COLUMN "{column}" {col_type}'
+                self.cursor.execute(alter_sql)
+                self.logger.info(f"添加列: {column} ({col_type})")
+            
+            self.conn.commit()
+            
+            # 如果需要合并数据
+            if merge_on_keys and new_columns:
+                self.logger.info("开始基于（时间，公司）键合并数据...")
+                
+                # 加载现有数据
+                query = f'SELECT "{self.time_col}", "{self.entity_col}" FROM "{table_name}"'
+                existing_df = pd.read_sql(query, self.conn)
+                existing_df[self.time_col] = pd.to_datetime(existing_df[self.time_col])
+                
+                # 创建键集合
+                existing_keys = set(
+                    zip(existing_df[self.time_col], existing_df[self.entity_col])
+                )
+                
+                update_count = 0
+                for _, row in df.iterrows():
+                    key = (row[self.time_col], row[self.entity_col])
+                    
+                    if key in existing_keys:
+                        set_clause = ', '.join([f'"{col}" = %s' for col in new_columns])
+                        update_sql = f'''
+                            UPDATE "{table_name}"
+                            SET {set_clause}
+                            WHERE "{self.time_col}" = %s AND "{self.entity_col}" = %s
+                        '''
+                        
+                        values = [None if pd.isna(row[col]) else row[col] 
+                                 for col in new_columns]
+                        values.extend([row[self.time_col], row[self.entity_col]])
+                        
+                        self.cursor.execute(update_sql, values)
+                        if self.cursor.rowcount > 0:
+                            update_count += 1
+                
+                self.conn.commit()
+                self.logger.info(f"成功更新 {update_count} 行的新列数据")
+            
+            return True
+            
+        except Exception as e:
+            self.conn.rollback()
+            import traceback
+            self.logger.error(f"添加列到表 {table_name} 失败: {str(e)}")
+            self.logger.error(f"详细错误信息: {traceback.format_exc()}")
+            self.logger.error("请优先检查数据格式问题,注:所有的时间格式都需要pd.to_datetime后方可录入")
+            return False
+    
+    @staticmethod
+    def help():
+        """显示 LongManager 的帮助信息"""
+        help_text = """
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    LongManager 使用帮助 (v1.0)                             ║
+║                   长格式（Panel Data）数据管理器                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+[核心特点]
+
+  - 专门处理长格式面板数据（Panel Data）
+  - 使用（时间，公司）作为复合键判断唯一性
+  - 时间列在第一列，公司列在第二列
+  - 使用自增序列作为主键，而非时间索引
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[数据格式]
+
+  长格式数据的特点：
+  - 每行是一个公司在某时间点的观测
+  - 同一时间有多个公司
+  - 同一公司有多个时间点
+
+  示例：
+  +------------+---------+----------+----------+-----+
+  |  datetime  | company | factor_A | factor_B | ... |
+  +------------+---------+----------+----------+-----+
+  | 2020-01-01 |  AAPL   |   25.3   |   0.15   | ... |
+  | 2020-01-01 |  GOOGL  |   28.7   |   0.18   | ... |
+  | 2020-01-02 |  AAPL   |   25.5   |   0.16   | ... |
+  | 2020-01-02 |  GOOGL  |   28.9   |   0.19   | ... |
+  +------------+---------+----------+----------+-----+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[主要功能]
+
+  1. create_table(table_name, dataframe, overwrite=False)
+     - 创建长格式数据表
+     - 自动调整列顺序（时间列第一，公司列第二）
+     - 自动创建复合索引提高查询性能
+
+  2. insert_data(table_name, dataframe, mode='skip')
+     - 基于（时间，公司）判断重复
+     - skip: 忽略重复键
+     - update: 更新重复键
+     - append: 直接追加
+
+  3. add_columns(table_name, dataframe, merge_on_keys=True)
+     - 添加新因子列
+     - 基于（时间，公司）合并数据
+
+  4. 继承 EasyManager 的所有其他功能
+     - load_table, drop_table, list_tables, get_table_info
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[快速示例]
+
+  from easy_manager import LongManager
+  import pandas as pd
+
+  # 1. 初始化（可自定义时间列和实体列名）
+  with LongManager(time_col='datetime', entity_col='company') as lm:
+      
+      # 2. 读取长格式数据
+      df = pd.read_csv('long_data/full_factors.csv')
+      df['datetime'] = pd.to_datetime(df['datetime'])
+      
+      # 3. 创建表（自动处理列顺序和索引）
+      lm.create_table('factor_panel', df)
+      
+      # 4. 添加新因子列
+      df_new = pd.read_csv('long_data/new_factors.csv')
+      df_new['datetime'] = pd.to_datetime(df_new['datetime'])
+      lm.add_columns('factor_panel', df_new)
+      
+      # 5. 插入增量数据（基于时间-公司键去重）
+      df_new_data = pd.read_csv('long_data/incremental.csv')
+      df_new_data['datetime'] = pd.to_datetime(df_new_data['datetime'])
+      lm.insert_data('factor_panel', df_new_data, mode='skip')
+      
+      # 6. 查看表信息
+      lm.get_table_info('factor_panel', print_info=True)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[重要提示]
+
+  - 时间列必须命名为 'datetime'（或自定义）
+  - 公司列必须命名为 'company'（或自定义）
+  - 时间列必须是 pd.to_datetime() 转换后的格式
+  - 重复判断基于（时间，公司）组合，而非单一索引
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[更多信息]
+
+  - EasyManager 完整手册：EasyManager完整使用手册.md
+  - 长格式数据说明：long_data/README.md
+  - 导入示例：long_data/import_example.py
+
+╚════════════════════════════════════════════════════════════════════════════╝
+        """
+        print(help_text)
 
 
 # 使用示例
